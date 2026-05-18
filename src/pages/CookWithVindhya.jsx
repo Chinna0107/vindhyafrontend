@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiClock, FiUsers, FiStar, FiChevronDown, FiChevronUp, FiShoppingCart, FiMessageCircle } from 'react-icons/fi';
 import './Cook.css';
 
-const WHATSAPP_NUMBER = '918142128079';
+const WHATSAPP_NUMBER = '919949085469';
 
 const recipes = [
   {
@@ -157,7 +157,7 @@ export default function CookWithVindhya() {
   const handleBulkOrderSubmit = () => {
     const items = Object.entries(bulkQuantities);
     if (items.length === 0) return;
-    
+
     const itemsList = items.map(([name, qty]) => `${name} (${qty} units)`).join(', ');
     const query = `Hi, I am planning an event and would like to place a bulk order for: ${itemsList}. Please let me know the process.`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(query)}`;
@@ -193,7 +193,7 @@ export default function CookWithVindhya() {
                   <span><FiUsers /> {recipe.servings}</span>
                   <span><FiStar /> {recipe.difficulty}</span>
                 </div>
-                
+
                 <AnimatePresence>
                   {openRecipeId === recipe.id && (
                     <motion.div className="recipe-steps"
@@ -232,19 +232,19 @@ export default function CookWithVindhya() {
             <h2>Planning an Event?</h2>
             <p>Weddings, housewarmings, festivals, or corporate events — we handle bulk orders with custom packaging and special pricing</p>
           </div>
-          
+
           <div className="bulk-grid">
             {bulkItems.map((item, idx) => {
               const qty = bulkQuantities[item.name] || 0;
               const isSelected = qty > 0;
-              
+
               return (
-                <div key={idx} 
+                <div key={idx}
                   className={`bulk-item ${isSelected ? 'selected' : ''}`}
                   onClick={() => handleItemClick(item.name)}>
                   <div className="bulk-item-name">{item.name}</div>
                   <div className="bulk-item-price">{item.price}/{item.quantity}</div>
-                  
+
                   {isSelected ? (
                     <div className="bulk-quantity-controls">
                       <button className="qty-btn" onClick={(e) => handleDecrement(e, item.name)}>-</button>
@@ -261,7 +261,7 @@ export default function CookWithVindhya() {
 
           <div className="bulk-footer">
             <p>👆 Select products above to build your bulk order</p>
-            <button 
+            <button
               className={`btn-bulk-submit ${Object.keys(bulkQuantities).length > 0 ? 'active' : ''}`}
               onClick={handleBulkOrderSubmit}
               disabled={Object.keys(bulkQuantities).length === 0}
