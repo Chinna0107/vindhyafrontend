@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiMail, FiLock, FiArrowRight, FiShield } from 'react-icons/fi';
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/logo3.png';
 import './Login.css';
 
 import API from '../config';
@@ -53,10 +53,10 @@ export default function AdminLogin() {
 
           <div className="login-brand">
             <div className="login-logo admin-logo">
-              <img src={logo} alt="OM Pickles" className="login-logo-img" />
+              <img src={logo} alt="Vindhya Pickles" className="login-logo-img" />
             </div>
             <div className="login-brand-name">ADMIN PANEL</div>
-            <div className="login-brand-sub">OM Pickles & Foods</div>
+            <div className="login-brand-sub">Vindhya Pickles & Foods</div>
           </div>
 
           <div className="admin-warning">
@@ -106,7 +106,7 @@ export default function AdminLogin() {
           <div className="login-side-content">
             <div className="side-emoji">🛡️</div>
             <h3>Admin Dashboard</h3>
-            <p>Manage your OM Pickles business from one powerful dashboard.</p>
+            <p>Manage your Vindhya Pickles business from one powerful dashboard.</p>
             <div className="side-benefits">
               <div className="benefit">📦 Manage all orders</div>
               <div className="benefit">🛍️ Add/edit products</div>

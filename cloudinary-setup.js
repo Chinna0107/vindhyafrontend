@@ -1,5 +1,5 @@
 // Cloudinary Upload Preset Setup Script
-// Run this once to create the upload preset for OM Pickles
+// Run this once to create the upload preset for Vindhya Pickles
 
 const CLOUDINARY_CONFIG = {
   CLOUD_NAME: 'dqmhtibfx',
@@ -59,7 +59,7 @@ async function createUploadPreset() {
 
 // Instructions for manual setup
 console.log(`
-🚀 Cloudinary Setup for OM Pickles
+🚀 Cloudinary Setup for Vindhya Pickles
 
 Your Cloudinary Account Details:
 - Cloud Name: ${CLOUDINARY_CONFIG.CLOUD_NAME}

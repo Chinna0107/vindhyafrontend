@@ -9,7 +9,7 @@ const sections = [
     title: 'Order Processing Time',
     content: (
       <>
-        <p>All orders placed on <strong>ompicklesandfoods.in</strong> are processed within <strong>1–2 business days</strong> after payment confirmation. Orders placed on weekends or public holidays will be processed on the next working day.</p>
+        <p>All orders placed on <strong>vindhyapicklesandfoods.in</strong> are processed within <strong>1–2 business days</strong> after payment confirmation. Orders placed on weekends or public holidays will be processed on the next working day.</p>
         <div className="policy-highlight">
           <strong>Note:</strong> During peak seasons (festivals, holidays), processing may take up to 3 business days. We will notify you via email/SMS if there is any delay.
         </div>
@@ -54,7 +54,7 @@ const sections = [
         <ul className="policy-list">
           <li>Tracking details are sent within 24 hours of dispatch</li>
           <li>You can also track your order from your Customer Dashboard under "My Orders"</li>
-          <li>For any tracking issues, contact us at <strong>+91 8142128079</strong></li>
+          <li>For any tracking issues, contact us at <strong>+91 9949085469</strong></li>
         </ul>
       </>
     ),
@@ -90,7 +90,7 @@ const sections = [
           <li>Re-shipping charges will apply for returned orders</li>
         </ul>
         <div className="policy-warning">
-          Please ensure your delivery address and phone number are correct at the time of placing the order. OM Pickles & Foods is not responsible for delays caused by incorrect address details.
+          Please ensure your delivery address and phone number are correct at the time of placing the order. vindhya pickles and foods is not responsible for delays caused by incorrect address details.
         </div>
       </>
     ),
@@ -101,7 +101,7 @@ const sections = [
     content: (
       <>
         <p>Currently, we <strong>do not offer international shipping</strong>. We deliver only within India. We are working on expanding our delivery to international locations in the future.</p>
-        <p>For bulk or corporate orders outside India, please contact us directly at <strong>ompicklesandfoodss@gmail.com</strong>.</p>
+        <p>For bulk or corporate orders outside India, please contact us directly at <strong>vindhyapicklesandfoods@gmail.com</strong>.</p>
       </>
     ),
   },
@@ -110,7 +110,7 @@ const sections = [
 export default function ShippingPolicy() {
   useSEO({
     title: 'Shipping Policy — Delivery & Tracking',
-    description: 'OM Pickles & Foods shipping policy. Free delivery above ₹499, pan-India delivery in 1–7 business days. Learn about processing times, tracking, and packaging.',
+    description: 'vindhya pickles and foods shipping policy. Free delivery above ₹499, pan-India delivery in 1–7 business days. Learn about processing times, tracking, and packaging.',
     canonical: '/shipping-policy',
   });
 
@@ -152,8 +152,8 @@ export default function ShippingPolicy() {
             <h3>Questions About Your Shipment?</h3>
             <p>Our team is available Mon–Sat, 9 AM – 8 PM IST</p>
             <div className="policy-contact-methods">
-              <a href="tel:+918142128079" className="policy-contact-link"><FiPhone /> +91 8142128079</a>
-              <a href="mailto:ompicklesandfoodss@gmail.com" className="policy-contact-link"><FiMail /> ompicklesandfoodss@gmail.com</a>
+              <a href="tel:+919949085469" className="policy-contact-link"><FiPhone /> +91 9949085469</a>
+              <a href="mailto:vindhyapicklesandfoods@gmail.com" className="policy-contact-link"><FiMail /> vindhyapicklesandfoods@gmail.com</a>
             </div>
           </div>
         </motion.div>

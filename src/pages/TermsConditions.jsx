@@ -9,9 +9,9 @@ const sections = [
     title: 'Acceptance of Terms',
     content: (
       <>
-        <p>By accessing or using <strong>ompicklesandfoods.in</strong> ("the Website"), placing an order, or creating an account, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our website.</p>
+        <p>By accessing or using <strong>vindhyapicklesandfoods.in</strong> ("the Website"), placing an order, or creating an account, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our website.</p>
         <div className="policy-highlight">
-          These Terms constitute a legally binding agreement between you ("Customer") and <strong>OM Pickles & Foods</strong>, owned and operated by <strong>Beemanaboina Sridevi</strong>, Gachibowli, Hyderabad, Telangana – 500032.
+          These Terms constitute a legally binding agreement between you ("Customer") and <strong>vindhya pickles and foods</strong>, owned and operated by <strong>Divya</strong>, Amaravathi, Guntur, Andhra Pradesh – 500000.
         </div>
       </>
     ),
@@ -74,17 +74,17 @@ const sections = [
     title: 'Payments via Razorpay',
     content: (
       <>
-        <p>All payments on ompicklesandfoods.in are processed through <strong>Razorpay</strong>, a secure and RBI-compliant payment gateway.</p>
+        <p>All payments on vindhyapicklesandfoods.in are processed through <strong>Razorpay</strong>, a secure and RBI-compliant payment gateway.</p>
         <div className="razorpay-badge">💳 Payments Powered by <span>Razorpay</span></div>
         <ul className="policy-list">
           <li>We accept UPI, Credit Cards, Debit Cards, Net Banking, Wallets, and EMI via Razorpay</li>
           <li>All transactions are encrypted using 256-bit SSL technology</li>
-          <li>OM Pickles & Foods does not store any card or banking credentials</li>
+          <li>vindhya pickles and foods does not store any card or banking credentials</li>
           <li>Payment disputes must be raised within 30 days of the transaction</li>
           <li>Chargeback requests must be made through your bank or Razorpay support</li>
         </ul>
         <div className="policy-highlight">
-          By completing a payment, you also agree to <strong>Razorpay's Terms of Service</strong> available at razorpay.com/terms. OM Pickles & Foods is not responsible for payment failures caused by your bank or Razorpay's systems.
+          By completing a payment, you also agree to <strong>Razorpay's Terms of Service</strong> available at razorpay.com/terms. Vindhya Pickles & Foods is not responsible for payment failures caused by your bank or Razorpay's systems.
         </div>
       </>
     ),
@@ -94,10 +94,10 @@ const sections = [
     title: 'Intellectual Property',
     content: (
       <>
-        <p>All content on this website — including but not limited to text, images, logos, product names, recipes, and design — is the exclusive property of <strong>OM Pickles & Foods</strong> and is protected by applicable intellectual property laws.</p>
+        <p>All content on this website — including but not limited to text, images, logos, product names, recipes, and design — is the exclusive property of <strong>vindhya pickles and foods</strong> and is protected by applicable intellectual property laws.</p>
         <ul className="policy-list">
           <li>You may not copy, reproduce, distribute, or use our content without written permission</li>
-          <li>The "OM Pickles & Foods" brand name and logo are proprietary trademarks</li>
+          <li>The "vindhya pickles and foods" brand name and logo are proprietary trademarks</li>
           <li>Unauthorised use of our intellectual property may result in legal action</li>
         </ul>
       </>
@@ -115,7 +115,7 @@ const sections = [
           <li>Attempting to hack, disrupt, or damage our systems</li>
           <li>Posting false reviews or misleading information</li>
           <li>Reselling our products without prior written authorisation</li>
-          <li>Impersonating OM Pickles & Foods or its representatives</li>
+          <li>Impersonating vindhya pickles and foods or its representatives</li>
         </ul>
         <div className="policy-warning">
           Violation of these terms may result in immediate account termination and legal action under applicable Indian laws including the IT Act, 2000.
@@ -128,7 +128,7 @@ const sections = [
     title: 'Limitation of Liability',
     content: (
       <>
-        <p>To the maximum extent permitted by law, OM Pickles & Foods shall not be liable for:</p>
+        <p>To the maximum extent permitted by law, vindhya pickles and foods shall not be liable for:</p>
         <ul className="policy-list">
           <li>Indirect, incidental, or consequential damages arising from use of our website or products</li>
           <li>Delays caused by courier partners, natural disasters, or circumstances beyond our control</li>
@@ -145,11 +145,11 @@ const sections = [
     title: 'Governing Law & Disputes',
     content: (
       <>
-        <p>These Terms and Conditions are governed by the laws of <strong>India</strong>. Any disputes arising from these terms or your use of our website shall be subject to the exclusive jurisdiction of the courts in <strong>Hyderabad, Telangana</strong>.</p>
+        <p>These Terms and Conditions are governed by the laws of <strong>India</strong>. Any disputes arising from these terms or your use of our website shall be subject to the exclusive jurisdiction of the courts in <strong>Amaravathi, Guntur, Andhra Pradesh</strong>.</p>
         <p>We encourage you to contact us first to resolve any disputes amicably before pursuing legal action.</p>
         <div className="policy-info-grid">
           <div className="policy-info-card"><div className="pic-label">Governing Law</div><div className="pic-value">Laws of India</div></div>
-          <div className="policy-info-card"><div className="pic-label">Jurisdiction</div><div className="pic-value">Hyderabad, Telangana</div></div>
+          <div className="policy-info-card"><div className="pic-label">Jurisdiction</div><div className="pic-value">Amaravathi, Guntur, Andhra Pradesh</div></div>
         </div>
       </>
     ),
@@ -165,8 +165,8 @@ const sections = [
 
 export default function TermsConditions() {
   useSEO({
-    title: 'Terms & Conditions — OM Pickles & Foods',
-    description: 'Terms and Conditions for OM Pickles & Foods. Covers orders, payments via Razorpay, intellectual property, prohibited activities, and governing law (Hyderabad, India).',
+    title: 'Terms & Conditions — vindhya pickles and foods',
+    description: 'Terms and Conditions for vindhya pickles and foods. Covers orders, payments via Razorpay, intellectual property, prohibited activities, and governing law (Hyderabad, India).',
     canonical: '/terms-conditions',
   });
 
@@ -208,8 +208,8 @@ export default function TermsConditions() {
             <h3>Questions About Our Terms?</h3>
             <p>We're happy to clarify — reach out to our team</p>
             <div className="policy-contact-methods">
-              <a href="tel:+918142128079" className="policy-contact-link"><FiPhone /> +91 8142128079</a>
-              <a href="mailto:ompicklesandfoodss@gmail.com" className="policy-contact-link"><FiMail /> ompicklesandfoodss@gmail.com</a>
+              <a href="tel:+919949085469" className="policy-contact-link"><FiPhone /> +91 9949085469</a>
+              <a href="mailto:vindhyapicklesandfoods@gmail.com" className="policy-contact-link"><FiMail /> vindhyapicklesandfoods@gmail.com</a>
             </div>
           </div>
         </motion.div>

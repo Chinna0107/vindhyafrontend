@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useSEO from '../hooks/useSEO';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiArrowRight, FiStar, FiShoppingBag, FiAward, FiTruck, FiShield, FiHeart } from 'react-icons/fi';
+import { FiArrowRight, FiStar, FiShoppingBag, FiAward, FiTruck, FiShield, FiHeart, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { testimonials } from '../data/products';
 import { useProducts } from '../hooks/useProducts';
 import { useCart } from '../context/CartContext';
+import banner2 from '../assets/banner2.jpeg';
+import banner3 from '../assets/banner2.jpeg';
 import './Home.css';
 
 const banners = [
@@ -125,7 +127,7 @@ function ProductCard({ product, delay = 0 }) {
     setTimeout(() => setAdded(false), 1800);
   };
   return (
-    <motion.div className="product-card"
+    <motion.div className="product-card glass-panel"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -172,8 +174,21 @@ export default function Home() {
   const [currentBanner, setCurrentBanner] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  const featured = products.filter(p => ['Bestseller', 'Popular'].includes(p.tag)).slice(0, 4);
-  const bestSelling = [...products].sort((a, b) => (b.reviews || 0) - (a.reviews || 0)).slice(0, 4);
+  const featuredRef = useRef(null);
+  const bestRef = useRef(null);
+
+  const scroll = (ref, direction) => {
+    if (ref.current) {
+      const scrollAmount = ref.current.clientWidth * 0.75;
+      ref.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const featured = products.filter(p => ['Bestseller', 'Popular'].includes(p.tag)).slice(0, 8);
+  const bestSelling = [...products].sort((a, b) => (b.reviews || 0) - (a.reviews || 0)).slice(0, 8);
 
   useEffect(() => {
     const t = setInterval(() => setCurrentBanner(p => (p + 1) % banners.length), 5000);
@@ -196,134 +211,44 @@ export default function Home() {
     <div className="home page-enter">
 
       {/* HERO */}
-      <section className="hero">
+      <section className="hero-slider-section">
         <AnimatePresence mode="wait">
-          <motion.div key={currentBanner} className="hero-bg"
-            style={{ background: banner.bg }}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}>
-            <div className="hero-particles">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className="particle" style={{ '--i': i }} />
-              ))}
+          <motion.div
+            key={currentBanner}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6 }}
+            className="absolute inset-0 flex justify-center"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            style={{ touchAction: 'pan-y' }}
+          >
+            <div className="hero-slide-container">
+              <img
+                src={banner.images[0]}
+                alt={banner.title}
+                className="hero-slide-img"
+              />
             </div>
           </motion.div>
         </AnimatePresence>
 
-        <div className="container hero-content">
-
-          {/* VISUAL — order-1 on mobile so it shows first */}
-          <motion.div className="hero-visual"
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
-            onDragEnd={handleDragEnd}>
-            <div className="hero-collage">
-              <div className="hero-collage-inner">
-                <AnimatePresence mode="wait">
-                  <motion.div key={`top-${currentBanner}`} className="hc-img hc-img--top"
-                    initial={{ opacity: 0, y: -50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 50 }}
-                    transition={{ duration: 0.55, ease: 'easeOut' }}>
-                    <img src={banner.images[0]} alt={banner.title} />
-                  </motion.div>
-                </AnimatePresence>
-                <AnimatePresence mode="wait">
-                  <motion.div key={`mid-${currentBanner}`} className="hc-img hc-img--mid"
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 50 }}
-                    transition={{ duration: 0.55, delay: 0.1, ease: 'easeOut' }}>
-                    <img src={banner.images[1]} alt="" />
-                  </motion.div>
-                </AnimatePresence>
-                <AnimatePresence mode="wait">
-                  <motion.div key={`bot-${currentBanner}`} className="hc-img hc-img--bot"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.55, delay: 0.2, ease: 'easeOut' }}>
-                    <img src={banner.images[2]} alt="" />
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              {/* <motion.div className="hc-stat hc-stat--tl"
-                initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.45, delay: 0.45 }}>
-                <AnimatedStat value={500} suffix="+" label="Happy Customers" accent={banner.accent} />
-              </motion.div>
-              <motion.div className="hc-stat hc-stat--tr"
-                initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.45, delay: 0.6 }}>
-                <AnimatedStat value={18} suffix="+" label="Products" accent={banner.accent} />
-              </motion.div>
-              <motion.div className="hc-stat hc-stat--br"
-                initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.45, delay: 0.75 }}>
-                <AnimatedStat value={5} suffix="★" label="Avg Rating" accent={banner.accent} />
-              </motion.div> */}
-            </div>
-            {/* mobile swipe hint */}
-            <div className="hero-swipe-hint">
-              {banners.map((_, i) => (
-                <motion.div key={i} className="swipe-bar"
-                  animate={{ width: i === currentBanner ? 28 : 8, opacity: i === currentBanner ? 1 : 0.35 }}
-                  transition={{ duration: 0.3 }}
-                  style={{ background: i === currentBanner ? banner.accent : 'rgba(255,255,255,0.5)' }}
-                />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* TEXT — order-2 on mobile so it shows after image */}
-          <AnimatePresence mode="wait">
-            <motion.div key={currentBanner} className="hero-text"
-              initial={{ opacity: 0, x: -60 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 60 }}
-              transition={{ duration: 0.7 }}>
-              <div className="hero-tag">
-                <span className="tag-dot" style={{ background: banner.accent }} />
-                {banner.tag}
-              </div>
-              <h1 className="hero-title">{banner.title}</h1>
-              <p className="hero-subtitle">{banner.subtitle}</p>
-              <p className="hero-desc">{banner.desc}</p>
-              <div className="hero-badge">
-                <span>✨ {banner.badge}</span>
-              </div>
-              <div className="hero-actions">
-                <Link to="/products" className="btn-primary">
-                  <span>{banner.cta}</span>
-                  <FiArrowRight />
-                </Link>
-                <Link to="/about" className="btn-outline-hero">Our Story</Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        <div className="hero-trust-pill">
-          <span>🚚</span> Free delivery - For a limited period !
-        </div>
-
-        <motion.div className="hero-scroll-hint"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}>
-          <div className="scroll-arrow" />
-        </motion.div>
-
-        <div className="banner-dots">
-          {banners.map((_, i) => (
-            <button key={i} className={`dot ${i === currentBanner ? 'active' : ''}`}
-              onClick={() => setCurrentBanner(i)} />
-          ))}
-        </div>
+        {/* Dot indicators */}
+        {banners.length > 1 && (
+          <div className="hero-dots">
+            {banners.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentBanner(i)}
+                className={`dot ${i === currentBanner ? 'active' : ''}`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* FEATURES */}
@@ -368,7 +293,7 @@ export default function Home() {
               </div>
               <div className="story-badge-card">
                 <div className="badge-year">2018</div>
-                <div className="badge-text">Est. in Hyderabad</div>
+                <div className="badge-text">Est. in Amaravathi</div>
               </div>
             </div>
           </motion.div>
@@ -381,7 +306,7 @@ export default function Home() {
             <div className="section-title" style={{ textAlign: 'left', marginBottom: 32 }}>
               <span className="tag">Our Story</span>
               <h2>A Taste Born from<br />Grandmother's Kitchen</h2>
-              <p>What started as a family tradition in a small kitchen in Hyderabad has grown into a beloved brand trusted by thousands of families across India.</p>
+              <p>What started as a family tradition in a small kitchen in Amaravathi has grown into a beloved brand trusted by thousands of families across India.</p>
             </div>
             <div className="story-points">
               {storyPoints.map((pt, i) => (
@@ -415,10 +340,20 @@ export default function Home() {
             <h2>Featured Products</h2>
             <p>Our most loved pickles and spice powders, crafted with the finest ingredients</p>
           </motion.div>
-          <div className="products-grid">
-            {featured.map((p, i) => <ProductCard key={p.id} product={p} delay={i * 0.1} />)}
+          
+          <div className="product-slider-wrapper">
+            <button className="slider-arrow prev" onClick={() => scroll(featuredRef, 'left')} aria-label="Previous Products">
+              <FiChevronLeft />
+            </button>
+            <div className="product-slider" ref={featuredRef}>
+              {featured.map((p, i) => <ProductCard key={p.id} product={p} delay={i * 0.05} />)}
+            </div>
+            <button className="slider-arrow next" onClick={() => scroll(featuredRef, 'right')} aria-label="Next Products">
+              <FiChevronRight />
+            </button>
           </div>
-          <motion.div style={{ textAlign: 'center', marginTop: 48 }}
+
+          <motion.div style={{ textAlign: 'center', marginTop: 42 }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -428,6 +363,15 @@ export default function Home() {
               <FiArrowRight />
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* MIDDLE BANNER SECTION */}
+      <section className="middle-banner-section">
+        <div className="container">
+          <div className="middle-banner-container">
+            <img src={banner2} alt="Vindhya Pickles Tradition & Taste" className="middle-banner-img" />
+          </div>
         </div>
       </section>
 
@@ -444,11 +388,101 @@ export default function Home() {
             <h2>Best Selling Products</h2>
             <p>The most ordered pickles by our loyal customers — tried, tested, and loved</p>
           </motion.div>
-          <div className="products-grid">
-            {bestSelling.map((p, i) => <ProductCard key={p.id} product={p} delay={i * 0.1} />)}
+          
+          <div className="product-slider-wrapper">
+            <button className="slider-arrow prev" onClick={() => scroll(bestRef, 'left')} aria-label="Previous Products">
+              <FiChevronLeft />
+            </button>
+            <div className="product-slider" ref={bestRef}>
+              {bestSelling.map((p, i) => <ProductCard key={p.id} product={p} delay={i * 0.05} />)}
+            </div>
+            <button className="slider-arrow next" onClick={() => scroll(bestRef, 'right')} aria-label="Next Products">
+              <FiChevronRight />
+            </button>
           </div>
         </div>
       </section>
+
+      {/* BOTTOM BANNER SECTION */}
+      <section className="middle-banner-section bottom-banner-section">
+        <div className="container">
+          <div className="middle-banner-container">
+            <img src={banner3} alt="Vindhya Pickles Premium Quality" className="middle-banner-img" />
+          </div>
+        </div>
+      </section>
+
+      {/* GRAPHIC BANNER: Pickles / Snacks / Podi's */}
+      <section>
+        <div className="container">
+          {/* lazy import component to reduce initial bundle? keep simple */}
+        </div>
+      </section>
+
+      {/* COOK WITH VINDHYA */}
+      {/* <section className="cook-section">
+        <div className="container">
+          <motion.div className="section-title"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}>
+            <span className="tag">Recipes & Pairings</span>
+            <h2>Cook with Vindhya</h2>
+            <p>Elevate your everyday meals with a spoonful of authentic Andhra flavor</p>
+          </motion.div>
+
+          <div className="cook-grid">
+            <motion.div className="cook-card glass-panel"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}>
+              <div className="cook-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=800&q=80" alt="Biryani with Chicken Pickle" className="cook-img" />
+                <div className="cook-tag">Pairing</div>
+              </div>
+              <div className="cook-content">
+                <h3>Hyderabadi Biryani & Chicken Pickle</h3>
+                <p>The ultimate Sunday feast. Pair your rich biryani with our spicy Chicken Pickle for an explosion of coastal flavors.</p>
+                <Link to="/products/chicken-pickle" className="cook-link">Get the Pickle <FiArrowRight /></Link>
+              </div>
+            </motion.div>
+
+            <motion.div className="cook-card glass-panel"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}>
+              <div className="cook-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1627308595229-7830f5c90683?w=800&q=80" alt="Dosa with Karam Podi" className="cook-img" />
+                <div className="cook-tag">Breakfast</div>
+              </div>
+              <div className="cook-content">
+                <h3>Crispy Dosa & Karam Podi</h3>
+                <p>Sprinkle a generous amount of our Kandi Podi over your butter dosa for a protein-rich, spicy start to your day.</p>
+                <Link to="/products?cat=karam" className="cook-link">Explore Podis <FiArrowRight /></Link>
+              </div>
+            </motion.div>
+
+            <motion.div className="cook-card glass-panel"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}>
+              <div className="cook-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&q=80" alt="Hot Rice with Avakaya" className="cook-img" />
+                <div className="cook-tag">Classic</div>
+              </div>
+              <div className="cook-content">
+                <h3>Hot Rice, Ghee & Mango Avakaya</h3>
+                <p>The timeless classic. Nothing beats the comfort of hot steamed rice mixed with pure ghee and our signature Mango Avakaya.</p>
+                <Link to="/products/mango-avakaya" className="cook-link">Get Avakaya <FiArrowRight /></Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section> */}
 
       {/* TESTIMONIALS */}
       <section className="testimonials-section">

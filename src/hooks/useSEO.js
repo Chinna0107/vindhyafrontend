@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 const BASE_URL = 'https://ompicklesandfoods.in';
 const DEFAULT_IMAGE = `${BASE_URL}/logo.jpeg`;
-const SITE_NAME = 'OM Pickles & Foods';
+const SITE_NAME = 'Vindhya Pickles & Foods';
 
 export default function useSEO({ title, description, canonical, image, type = 'website' }) {
   useEffect(() => {

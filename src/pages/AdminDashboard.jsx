@@ -39,7 +39,7 @@ export default function AdminDashboard() {
         <div className="dash-brand">
           <span className="dash-brand-emoji">🛡️</span>
           <div>
-            <div className="dash-brand-name">OM Pickles</div>
+            <div className="dash-brand-name">Vindhya Pickles</div>
             <div className="dash-brand-sub">Admin Panel</div>
           </div>
         </div>

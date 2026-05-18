@@ -37,7 +37,7 @@ const sections = [
         <div className="razorpay-badge">🔒 Secured by <span>Razorpay</span> — PCI-DSS Level 1 Certified</div>
         <ul className="policy-list">
           <li>Razorpay collects and processes your payment information directly on their secure servers</li>
-          <li>OM Pickles & Foods only receives a transaction confirmation and order ID — never your card or banking details</li>
+          <li>vindhya pickles and foods only receives a transaction confirmation and order ID — never your card or banking details</li>
           <li>Razorpay uses 256-bit SSL encryption for all transactions</li>
           <li>Your payment data is governed by Razorpay's Privacy Policy: <strong>razorpay.com/privacy</strong></li>
         </ul>
@@ -106,7 +106,7 @@ const sections = [
           <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time</li>
           <li><strong>Portability:</strong> Request your data in a portable format</li>
         </ul>
-        <p>To exercise any of these rights, contact us at <strong>ompicklesandfoodss@gmail.com</strong>. We will respond within 30 days.</p>
+        <p>To exercise any of these rights, contact us at <strong>vindhyapicklesandfoods@gmail.com</strong>. We will respond within 30 days.</p>
       </>
     ),
   },
@@ -155,8 +155,8 @@ const sections = [
 
 export default function PrivacyPolicy() {
   useSEO({
-    title: 'Privacy Policy — OM Pickles & Foods',
-    description: 'OM Pickles & Foods privacy policy. Learn how we collect, use, and protect your personal data. Payments secured by Razorpay. We never sell your data.',
+    title: 'Privacy Policy — vindhya pickles and foods',
+    description: 'vindhya pickles and foods privacy policy. Learn how we collect, use, and protect your personal data. Payments secured by Razorpay. We never sell your data.',
     canonical: '/privacy-policy',
   });
 
@@ -199,7 +199,7 @@ export default function PrivacyPolicy() {
             <p>Contact our team — we respond within 30 days</p>
             <div className="policy-contact-methods">
               <a href="tel:+918142128079" className="policy-contact-link"><FiPhone /> +91 8142128079</a>
-              <a href="mailto:ompicklesandfoodss@gmail.com" className="policy-contact-link"><FiMail /> ompicklesandfoodss@gmail.com</a>
+              <a href="mailto:vindhyapicklesandfoods@gmail.com" className="policy-contact-link"><FiMail /> vindhyapicklesandfoods@gmail.com</a>
             </div>
           </div>
         </motion.div>

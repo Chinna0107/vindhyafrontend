@@ -9,19 +9,20 @@ import './Products.css';
 
 const categories = [
   { id: 'all', label: 'All Products', emoji: '🫙' },
-  { id: 'veg', label: 'Veg Pickles', emoji: '🥭' },
-  { id: 'nonveg', label: 'Non-Veg Pickles', emoji: '🍗' },
-  { id: 'karam', label: 'Karam Podi', emoji: '🌶️' },
+  { id: 'pickles', label: 'Pickles', emoji: '🥭' },
+  { id: "podi's", label: "Podi's", emoji: '🌶️' },
+  { id: 'snacks', label: 'Snacks', emoji: '🍪' },
 ];
 
 export default function Products() {
   useSEO({
-    title: 'Buy Andhra Pickles Online — Veg, Non-Veg & Karam Podi',
-    description: 'Shop 18+ authentic Andhra pickles — Mango Avakaya, Gongura, Chicken, Mutton, Prawn, Fish, Karam Podi & more. Handcrafted, no preservatives. Order online, delivered across India.',
+    title: 'Buy Vindhya Pickles & Foods Online — Pickles, Podi\'s & Snacks',
+    description: 'Shop authentic Vindhya pickles, podi\'s, and home-style snacks. Handcrafted, no preservatives. Order online, delivered across India.',
     canonical: '/products',
   });
   const [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(searchParams.get('cat') || 'all');
+  const [activeSubcategory, setActiveSubcategory] = useState('all');
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('popular');
   const [addedId, setAddedId] = useState(null);
@@ -42,6 +43,10 @@ export default function Products() {
     if (cat) setActiveCategory(cat);
   }, [searchParams]);
 
+  useEffect(() => {
+    setActiveSubcategory('all');
+  }, [activeCategory]);
+
   const cats = categories.map(c => ({
     ...c,
     count: c.id === 'all' ? allProducts.length : allProducts.filter(p => p.category === c.id).length,
@@ -49,6 +54,12 @@ export default function Products() {
 
   const filtered = allProducts
     .filter(p => activeCategory === 'all' || p.category === activeCategory)
+    .filter(p => {
+      if (activeCategory === 'snacks' && activeSubcategory !== 'all') {
+        return p.subcategory === activeSubcategory;
+      }
+      return true;
+    })
     .filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || (p.short_desc || '').toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
       const priceA = a.prices?.[0]?.price || 0;
@@ -69,7 +80,7 @@ export default function Products() {
         <div className="container page-hero-content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="page-hero-tag">🫙 Our Collection</span>
-            <h1>Authentic Andhra Pickles</h1>
+            <h1>Authentic Vindhya Pickles & Foods</h1>
             <p>Handcrafted with love, tradition, and the finest ingredients</p>
           </motion.div>
         </div>
@@ -84,7 +95,7 @@ export default function Products() {
         {/* CATEGORIES */}
         <section className="categories-section">
           <div className="categories-grid">
-            {categories.map(cat => (
+            {cats.map(cat => (
               <motion.button key={cat.id}
                 className={`category-card ${activeCategory === cat.id ? 'active' : ''}`}
                 onClick={() => setActiveCategory(cat.id)}
@@ -101,6 +112,35 @@ export default function Products() {
             ))}
           </div>
         </section>
+
+        {/* SUBCATEGORIES FOR SNACKS */}
+        {activeCategory === 'snacks' && (
+          <div className="subcategories-bar" style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '20px 0' }}>
+            {[
+              { id: 'all', label: 'All Snacks' },
+              { id: 'sweet items', label: 'Sweet Items' },
+              { id: 'hot items', label: 'Hot Items' },
+            ].map(sub => (
+              <button
+                key={sub.id}
+                onClick={() => setActiveSubcategory(sub.id)}
+                className={`subcat-btn ${activeSubcategory === sub.id ? 'active' : ''}`}
+                style={{
+                  padding: '8px 20px',
+                  borderRadius: '20px',
+                  border: '1px solid var(--accent)',
+                  background: activeSubcategory === sub.id ? 'var(--accent)' : 'transparent',
+                  color: activeSubcategory === sub.id ? '#fff' : 'var(--accent)',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {sub.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* FILTERS */}
         <div className="filters-bar">
@@ -146,7 +186,7 @@ export default function Products() {
                 const firstPrice = product.prices?.[0] || { weight: '', price: 0, originalPrice: 0 };
                 const discount = firstPrice.originalPrice ? Math.round(((firstPrice.originalPrice - firstPrice.price) / firstPrice.originalPrice) * 100) : 0;
                 return (
-                  <motion.div key={product.id} className="product-card-full"
+                  <motion.div key={product.id} className="product-card-full glass-panel"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}>

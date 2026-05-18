@@ -56,7 +56,7 @@ export default function CustomerDashboard() {
         <div className="dash-brand">
           <span className="dash-brand-emoji">🫙</span>
           <div>
-            <div className="dash-brand-name">OM Pickles</div>
+            <div className="dash-brand-name">Vindhya Pickles</div>
             <div className="dash-brand-sub">Customer Portal</div>
           </div>
         </div>

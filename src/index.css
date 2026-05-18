@@ -1,23 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #1a1400;
-  --primary-dark: #0d0a00;
-  --primary-light: #3d3000;
-  --gold: #ebb812;
-  --gold-light: #f5c414;
-  --gold-dark: #a07d08;
-  --dark: #1a1400;
-  --dark2: #2d2400;
-  --brown: #4c3300;
-  --cream: #fdf8ec;
-  --cream2: #fffbf0;
-  --text: #2d2000;
-  --text-light: #7a6a30;
+  --primary: #5c0912;         /* Deep luxurious maroon matching the logo ribbon */
+  --primary-dark: #3a0309;    /* Rich dark burgundy */
+  --primary-light: #8c1421;   /* Warm crimson red */
+  --gold: #d4a017;            /* Brilliant gold frame color */
+  --gold-light: #dfb76c;      /* Soft champagne gold */
+  --gold-dark: #9c7104;       /* Deep warm mustard gold */
+  --dark: #1f0305;            /* Very dark maroon-black instead of neutral dark */
+  --dark2: #340c0f;           /* Deep dark charcoal-burgundy */
+  --brown: #5c0912;           /* Warm maroon-brown */
+  --cream: #fcfbf8;           /* Clean premium warm soft-white backdrop */
+  --cream2: #f8f4eb;          /* Cozy light cream */
+  --text: #2c090c;            /* Deepest burgundy-black for readable typography */
+  --text-light: #785a5d;      /* Muted wine-gray for captions */
   --white: #ffffff;
-  --shadow: 0 10px 40px rgba(235, 184, 18, 0.18);
-  --shadow-gold: 0 10px 40px rgba(235, 184, 18, 0.25);
-  --radius: 16px;
+  --shadow: 0 12px 30px rgba(92, 9, 18, 0.12); /* Dynamic shadow using maroon hues */
+  --shadow-gold: 0 12px 30px rgba(212, 160, 23, 0.25);
+  --shadow-glass: 0 8px 32px 0 rgba(92, 9, 18, 0.04);
+  --radius: 20px;
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -126,7 +127,16 @@ button {
 
 .btn-primary:hover::before { left: 0; }
 .btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(235, 184, 18, 0.5); }
+.btn-primary:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(212, 160, 23, 0.45); }
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-glass);
+  border-radius: var(--radius);
+}
 
 .btn-outline {
   display: inline-flex;

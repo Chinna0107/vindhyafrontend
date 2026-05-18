@@ -9,7 +9,7 @@ const sections = [
     title: 'Refund & Return Overview',
     content: (
       <>
-        <p>At OM Pickles & Foods, we take pride in the quality of every jar we make. If you are not completely satisfied with your purchase, we are here to help.</p>
+        <p>At vindhya pickles and foods, we take pride in the quality of every jar we make. If you are not completely satisfied with your purchase, we are here to help.</p>
         <div className="policy-highlight">
           <strong>Our Promise:</strong> We offer refunds or replacements for damaged, defective, or incorrect products. All refund requests must be raised within <strong>48 hours</strong> of delivery.
         </div>
@@ -84,7 +84,7 @@ const sections = [
           </table>
         </div>
         <div className="policy-highlight">
-          Razorpay refund timelines are subject to your bank's processing time. OM Pickles & Foods initiates the refund within <strong>2 business days</strong> of approval. The actual credit depends on your bank.
+          Razorpay refund timelines are subject to your bank's processing time. vindhya pickles and foods initiates the refund within <strong>2 business days</strong> of approval. The actual credit depends on your bank.
         </div>
         <p>For payment-related disputes, you can also contact Razorpay support at <strong>support@razorpay.com</strong> or call <strong>1800-123-1272</strong>.</p>
       </>
@@ -124,8 +124,8 @@ const sections = [
 
 export default function RefundPolicy() {
   useSEO({
-    title: 'Refund & Return Policy — OM Pickles & Foods',
-    description: 'OM Pickles & Foods refund and return policy. Razorpay payment refunds processed in 5–7 business days. Damaged or wrong products eligible for full refund within 48 hours.',
+    title: 'Refund & Return Policy — vindhya pickles and foods',
+    description: 'vindhya pickles and foods refund and return policy. Razorpay payment refunds processed in 5–7 business days. Damaged or wrong products eligible for full refund within 48 hours.',
     canonical: '/refund-policy',
   });
 
@@ -167,8 +167,8 @@ export default function RefundPolicy() {
             <h3>Need Help With a Refund?</h3>
             <p>Contact us within 48 hours of delivery — Mon–Sat, 9 AM – 8 PM IST</p>
             <div className="policy-contact-methods">
-              <a href="tel:+918142128079" className="policy-contact-link"><FiPhone /> +91 8142128079</a>
-              <a href="mailto:ompicklesandfoodss@gmail.com" className="policy-contact-link"><FiMail /> ompicklesandfoodss@gmail.com</a>
+              <a href="tel:+919949085469" className="policy-contact-link"><FiPhone /> +91 9949085469</a>
+              <a href="mailto:vindhyapicklesandfoods@gmail.com" className="policy-contact-link"><FiMail /> vindhyapicklesandfoods@gmail.com</a>
             </div>
           </div>
         </motion.div>

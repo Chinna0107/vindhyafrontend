@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useLocation, Link, Outlet } from 'react-router-dom';
 import { FiShoppingBag, FiPackage, FiUser, FiLogOut, FiMenu, FiX, FiHome } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from '../../assets/logo.jpeg';
+import logo from '../../assets/logo3.png';
 import '../Dashboard.css';
 
 const tabs = [
@@ -41,9 +41,9 @@ export default function CustomerLayout() {
       <header className="mobile-header">
         <div className="mobile-header-content">
           <div className="mobile-brand">
-            <img src={logo} alt="OM Pickles" className="mobile-logo" />
+            <img src={logo} alt="Vindhya Pickles" className="mobile-logo" />
             <div className="mobile-brand-text">
-              <span className="mobile-brand-name">OM Pickles</span>
+              <span className="mobile-brand-name">Vindhya Pickles</span>
               <span className="mobile-brand-sub">Customer Portal</span>
             </div>
           </div>
@@ -127,10 +127,10 @@ export default function CustomerLayout() {
       <aside className="dash-sidebar desktop-sidebar">
         <div className="dash-brand">
           <div className="dash-brand-logo">
-            <img src={logo} alt="OM Pickles" className="dash-brand-logo-img" />
+            <img src={logo} alt="Vindhya Pickles" className="dash-brand-logo-img" />
           </div>
           <div>
-            <div className="dash-brand-name">OM Pickles</div>
+            <div className="dash-brand-name">Vindhya Pickles</div>
             <div className="dash-brand-sub">Customer Portal</div>
           </div>
         </div>

@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation, Link, Outlet } from 'react-router-dom';
-import { FiGrid, FiPackage, FiShoppingBag, FiBarChart2, FiLogOut } from 'react-icons/fi';
-import logo from '../../assets/logo.jpeg';
+import { FiGrid, FiPackage, FiShoppingBag, FiBarChart2, FiUsers, FiLogOut } from 'react-icons/fi';
+import logo from '../../assets/logo3.png';
 import '../Dashboard.css';
 
 const tabs = [
   { path: '/admin/dashboard', icon: <FiGrid />, label: 'Dashboard' },
   { path: '/admin/products', icon: <FiShoppingBag />, label: 'Products' },
   { path: '/admin/orders', icon: <FiPackage />, label: 'Orders' },
+  { path: '/admin/customers', icon: <FiUsers />, label: 'Customers' },
   { path: '/admin/reports', icon: <FiBarChart2 />, label: 'Reports' },
 ];
 
@@ -32,10 +33,10 @@ export default function AdminLayout() {
       <aside className="dash-sidebar admin-sidebar">
         <div className="dash-brand">
           <div className="dash-brand-logo">
-            <img src={logo} alt="OM Pickles" className="dash-brand-logo-img" />
+            <img src={logo} alt="Vindhya Pickles" className="dash-brand-logo-img" />
           </div>
           <div>
-            <div className="dash-brand-name">OM Pickles</div>
+            <div className="dash-brand-name">Vindhya Pickles</div>
             <div className="dash-brand-sub">Admin Panel</div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FiPhone, FiMail, FiMapPin, FiInstagram, FiFacebook, FiYoutube } from 'react-icons/fi';
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/logo3.png';
 import './Footer.css';
 
 export default function Footer() {
@@ -17,17 +17,17 @@ export default function Footer() {
           {/* BRAND */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src={logo} alt="OM Pickles Logo" className="footer-logo-img" />
+              <img src={logo} alt="Vindhya Pickles Logo" className="footer-logo-img" />
               <div>
-                <div className="footer-logo-name">OM PICKLES</div>
+                <div className="footer-logo-name">VINDHYA PICKLES</div>
                 <div className="footer-logo-tagline">& Foods</div>
               </div>
             </div>
             <p>Authentic Andhra pickles crafted with love, tradition, and the finest ingredients. Bringing the taste of home to your table since 2018.</p>
             <div className="footer-socials">
-              <a href="#" className="social-btn"><FiInstagram /></a>
-              <a href="#" className="social-btn"><FiFacebook /></a>
-              <a href="#" className="social-btn"><FiYoutube /></a>
+              <a href="https://www.instagram.com/vindhya.foods?igsh=MTR1b2VycjB0NW12dQ%3D%3D&utm_source=qr" className="social-btn"><FiInstagram /></a>
+              <a href="https://www.facebook.com/share/16JvfPzWu1/?mibextid=wwXIfr" className="social-btn"><FiFacebook /></a>
+              <a href="https://youtube.com/@vindhya.foods1?si=VPMj183OkMnlwi7S" className="social-btn"><FiYoutube /></a>
             </div>
           </div>
 
@@ -74,15 +74,15 @@ export default function Footer() {
             <ul className="contact-list">
               <li>
                 <FiPhone />
-                <a href="tel:+918142128079">+91 8142128079</a>
+                <a href="tel:+919949085469">+91 9949085469</a>
               </li>
               <li>
                 <FiMail />
-                <a href="mailto:ompicklesandfoodss@gmail.com">ompicklesandfoodss@gmail.com</a>
+                <a href="mailto:vindhyapicklesandfoods@gmail.com">vindhyapicklesandfoods@gmail.com</a>
               </li>
               <li>
                 <FiMapPin />
-                <span>Gachibowli, Hyderabad, 500032</span>
+                <span>Amaravathi, Guntur, Andhra Pradesh - 500000</span>
               </li>
             </ul>
           </div>
@@ -91,7 +91,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <div className="container footer-bottom-inner">
-            <p>© 2026 OM Pickles &amp; Foods. All rights reserved. | Owner: <strong>Beemanaboina Sridevi</strong></p>
+            <p>© 2026 Vindhya Pickles &amp; Foods. All rights reserved. | Owner: <strong>Divya</strong></p>
             <div className="footer-bottom-links">
               <Link to="/privacy-policy">Privacy</Link>
               <span>·</span>
@@ -101,7 +101,7 @@ export default function Footer() {
               <span>·</span>
               <Link to="/shipping-policy">Shipping</Link>
             </div>
-            <p>Made with ❤️ in Hyderabad</p>
+            <p>Made with ❤️ by <a href="https://zewo.in" target="_blank" rel="noopener noreferrer">zewo</a></p>
           </div>
         </div>
       </div>

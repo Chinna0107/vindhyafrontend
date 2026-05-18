@@ -477,7 +477,7 @@ export const products = [
 export const testimonials = [
   { id: 1, name: 'Priya Sharma', city: 'Hyderabad', rating: 5, text: 'The Mango Avakaya is exactly like my grandmother used to make! Authentic taste, perfect spice level. I order every month without fail.', avatar: 'PS' },
   { id: 2, name: 'Ravi Kumar', city: 'Bangalore', rating: 5, text: 'Ordered the Chicken Pickle for the first time and I\'m completely hooked. The masala blend is incredible. Fast delivery too!', avatar: 'RK' },
-  { id: 3, name: 'Anitha Reddy', city: 'Chennai', rating: 5, text: 'Gongura Pachadi brought back memories of Andhra. OM Pickles maintains the traditional recipe perfectly. Highly recommended!', avatar: 'AR' },
+  { id: 3, name: 'Anitha Reddy', city: 'Chennai', rating: 5, text: 'Gongura Pachadi brought back memories of Andhra. Vindhya Pickles maintains the traditional recipe perfectly. Highly recommended!', avatar: 'AR' },
   { id: 4, name: 'Suresh Babu', city: 'Mumbai', rating: 5, text: 'The Kandi Podi is outstanding! Mixed with hot rice and ghee — pure bliss. The packaging is also very premium.', avatar: 'SB' },
   { id: 5, name: 'Lakshmi Devi', city: 'Vizag', rating: 5, text: 'Sridevi garu\'s pickles are the best in Hyderabad. The quality is consistent and the taste is always perfect. Love it!', avatar: 'LD' },
 ];

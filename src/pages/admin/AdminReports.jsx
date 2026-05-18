@@ -72,7 +72,7 @@ export default function AdminReports() {
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(monthlyData), 'Monthly Summary');
     const productsData = report.topProducts?.map((p, i) => ({ 'Rank': i + 1, 'Product': p.product, 'Qty Sold': p.qty_sold }));
     XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(productsData), 'Top Products');
-    XLSX.writeFile(wb, `OM_Pickles_Report_${rangeLabel}.xlsx`);
+    XLSX.writeFile(wb, `Vindhya_Foods_Report_${rangeLabel}.xlsx`);
   };
 
   const exportPDF = () => {
@@ -84,7 +84,7 @@ export default function AdminReports() {
     doc.setTextColor(235, 184, 18);
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('OM PICKLES & FOODS', pageW / 2, 12, { align: 'center' });
+    doc.text('VINDHYA PICKLES & FOODS', pageW / 2, 12, { align: 'center' });
     doc.setFontSize(10);
     doc.setTextColor(200, 180, 100);
     doc.text(`Sales Report: ${rangeLabel.replace(/_/g, ' ')}`, pageW / 2, 21, { align: 'center' });
@@ -133,7 +133,7 @@ export default function AdminReports() {
       doc.setPage(i); doc.setFontSize(8); doc.setTextColor(150);
       doc.text(`Page ${i} of ${pageCount} — Generated on ${new Date().toLocaleDateString('en-IN')}`, pageW / 2, doc.internal.pageSize.getHeight() - 8, { align: 'center' });
     }
-    doc.save(`OM_Pickles_Report_${rangeLabel}.pdf`);
+    doc.save(`Vindhya_Foods_Report_${rangeLabel}.pdf`);
   };
 
   return (

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FiEdit2, FiTrash2, FiPlus, FiX, FiCheck } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiPlus, FiX, FiCheck, FiStar } from 'react-icons/fi';
 import CloudinaryImageUpload from '../../components/CloudinaryImageUpload';
 import '../../components/CloudinaryImageUpload.css';
 import API from '../../config';
@@ -8,8 +8,8 @@ import API from '../../config';
 const authHeader = () => ({ Authorization: `Bearer ${localStorage.getItem('adminToken')}`, 'Content-Type': 'application/json' });
 
 const EMPTY_FORM = {
-  name: '', slug: '', category: 'veg', tag: '', emoji: '', short_desc: '', full_desc: '',
-  spice: 1, in_stock: true, rating: 4.5, reviews: 0,
+  name: '', slug: '', category: 'pickles', subcategory: '', tag: '', emoji: '', short_desc: '', full_desc: '',
+  spice: 1, in_stock: true, rating: 4.5, reviews: [],
   prices: [{ weight: '', price: '', originalPrice: '' }],
   images: [''], benefits: [''], ingredients: [''],
 };
@@ -30,16 +30,42 @@ export default function AdminProducts() {
   const normalizeForm = (p) => ({
     ...p,
     name: p.name || '', slug: p.slug || '', tag: p.tag || '', emoji: p.emoji || '',
+    subcategory: p.subcategory || '',
     short_desc: p.short_desc || '', full_desc: p.full_desc || '',
-    rating: p.rating ?? 4.5, reviews: p.reviews ?? 0,
+    rating: p.rating ?? 4.5,
+    reviews: Array.isArray(p.reviews) ? p.reviews : [],
     prices: Array.isArray(p.prices) && p.prices.length ? p.prices : [{ weight: '', price: '', originalPrice: '' }],
     images: Array.isArray(p.images) && p.images.length ? p.images : [''],
     benefits: Array.isArray(p.benefits) && p.benefits.length ? p.benefits : [''],
     ingredients: Array.isArray(p.ingredients) && p.ingredients.length ? p.ingredients : [''],
   });
 
-  const openEdit = (p) => { setEditing(p); setForm(normalizeForm(p)); setError(''); setShowForm(true); };
-  const openAdd = () => { setEditing(null); setForm(EMPTY_FORM); setError(''); setShowForm(true); };
+  const openEdit = async (p) => {
+    setEditing(p);
+    setError('');
+    let productReviews = [];
+    try {
+      const res = await fetch(`${API}/products/${p.id}/reviews`);
+      if (res.ok) {
+        productReviews = await res.json();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    setForm({
+      ...normalizeForm(p),
+      reviews: productReviews
+    });
+    setShowForm(true);
+  };
+
+  const openAdd = () => {
+    setEditing(null);
+    setForm(EMPTY_FORM);
+    setError('');
+    setShowForm(true);
+  };
+
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
   const setPrice = (i, key, val) => setForm(f => { const p = [...f.prices]; p[i] = { ...p[i], [key]: val }; return { ...f, prices: p }; });
@@ -56,7 +82,7 @@ export default function AdminProducts() {
 
   const handleImageRemove = (index) => {
     if (form.images.length === 1) {
-      setImage(index, ''); // Keep at least one empty slot
+      setImage(index, '');
     } else {
       removeImage(index);
     }
@@ -71,8 +97,9 @@ export default function AdminProducts() {
     const payload = {
       ...form,
       spice: parseInt(form.spice),
+      subcategory: form.category === 'snacks' ? form.subcategory : null,
       rating: parseFloat(form.rating) || 0,
-      reviews: parseInt(form.reviews) || 0,
+      reviews: Array.isArray(form.reviews) ? form.reviews.length : 0,
       prices: form.prices.filter(p => p.weight).map(p => ({ weight: p.weight, price: parseFloat(p.price), originalPrice: parseFloat(p.originalPrice) })),
       images: form.images.filter(Boolean),
       benefits: form.benefits.filter(Boolean),
@@ -80,12 +107,34 @@ export default function AdminProducts() {
     };
     const url = editing ? `${API}/products/${editing.id}` : `${API}/products`;
     const method = editing ? 'PUT' : 'POST';
-    const res = await fetch(url, { method, headers: authHeader(), body: JSON.stringify(payload) });
-    const data = await res.json();
-    setSaving(false);
-    if (!res.ok) { setError(data.error || 'Save failed'); return; }
-    setShowForm(false); load();
+    try {
+      const res = await fetch(url, { method, headers: authHeader(), body: JSON.stringify(payload) });
+      const data = await res.json();
+      if (!res.ok) { 
+        setError(data.error || 'Save failed'); 
+        setSaving(false);
+        return; 
+      }
+      
+      const productId = data.product?.id || data.id || editing?.id;
+      if (productId) {
+        // Sync reviews
+        await fetch(`${API}/products/${productId}/reviews`, {
+          method: 'PUT',
+          headers: authHeader(),
+          body: JSON.stringify({ reviews: form.reviews || [] }),
+        });
+      }
+      
+      setSaving(false);
+      setShowForm(false); 
+      load();
+    } catch (err) {
+      setError(err.message || 'Save failed');
+      setSaving(false);
+    }
   };
+
 
   const del = async (id) => {
     if (!confirm('Delete this product?')) return;
@@ -119,6 +168,7 @@ export default function AdminProducts() {
                   <button className="dash-icon-btn edit" onClick={() => openEdit(p)}><FiEdit2 /></button>
                   <button className="dash-icon-btn del" onClick={() => del(p.id)}><FiTrash2 /></button>
                 </td>
+
               </tr>
             ))}
           </tbody>
@@ -146,24 +196,25 @@ export default function AdminProducts() {
                 <div className="dash-form-group">
                   <label>Category</label>
                   <select value={form.category} onChange={e => set('category', e.target.value)}>
-                    <option value="veg">Veg</option>
-                    <option value="nonveg">Non-Veg</option>
-                    <option value="karam">Karam Podi</option>
+                    <option value="pickles">Pickles</option>
+                    <option value="podi's">Podi's</option>
+                    <option value="snacks">Snacks</option>
                   </select>
                 </div>
-                <div className="dash-form-group"><label>Spice (1–5)</label><input type="number" min="1" max="5" value={form.spice} onChange={e => set('spice', e.target.value)} /></div>
-              </div>
-              <div className="dash-form-row">
-                <div className="dash-form-group">
-                  <label>Rating</label>
-                  <select value={form.rating} onChange={e => set('rating', e.target.value)}>
-                    <option value="4.5">4.5</option>
-                    <option value="5.0">5.0</option>
-                  </select>
-                </div>
-                <div className="dash-form-group"><label>Reviews Count</label><input type="number" min="0" value={form.reviews} onChange={e => set('reviews', e.target.value)} /></div>
+                {form.category === 'snacks' && (
+                  <div className="dash-form-group">
+                    <label>Subcategory</label>
+                    <select value={form.subcategory} onChange={e => set('subcategory', e.target.value)}>
+                      <option value="">Select Subcategory</option>
+                      <option value="sweet items">Sweet Items</option>
+                      <option value="hot items">Hot Items</option>
+                    </select>
+                  </div>
+                )}
+                <div className="dash-form-group"><label>Spice (0–5)</label><input type="number" min="0" max="5" value={form.spice} onChange={e => set('spice', e.target.value)} /></div>
               </div>
               <div className="dash-form-group"><label>Short Description</label><input value={form.short_desc} onChange={e => set('short_desc', e.target.value)} /></div>
+
               <div className="dash-form-group"><label>Full Description</label><textarea rows={3} value={form.full_desc || ''} onChange={e => set('full_desc', e.target.value)} /></div>
               <div className="dash-form-group">
                 <label className="dash-checkbox-label"><input type="checkbox" checked={form.in_stock} onChange={e => set('in_stock', e.target.checked)} /> In Stock</label>
@@ -218,6 +269,76 @@ export default function AdminProducts() {
                 </div>
               ))}
               <button className="dash-btn-ghost" onClick={() => addArr('ingredients')}><FiPlus /> Add Ingredient</button>
+
+              <div className="dash-form-section" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
+                <span>Customer Reviews</span>
+                <button type="button" className="dash-btn-ghost" style={{ padding: '4px 10px', fontSize: 12, margin: 0 }}
+                  onClick={() => setForm(f => ({ ...f, reviews: [...(f.reviews || []), { customer_name: '', rating: 5, comment: '', date: new Date().toISOString().split('T')[0] }] }))}>
+                  <FiPlus /> Add Review
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 12 }}>
+                {(form.reviews || []).map((rev, idx) => (
+                  <div key={idx} style={{ background: '#fcfbf8', border: '1px solid rgba(212, 160, 23, 0.18)', borderRadius: 16, padding: 16 }}>
+                    <div className="dash-form-row" style={{ gap: 8, marginBottom: 8 }}>
+                      <div className="dash-form-group" style={{ flex: 2 }}>
+                        <label>Customer Name</label>
+                        <input value={rev.customer_name || rev.name || ''} 
+                          onChange={e => {
+                            const r = [...form.reviews];
+                            r[idx] = { ...r[idx], customer_name: e.target.value };
+                            setForm(f => ({ ...f, reviews: r }));
+                          }} 
+                          placeholder="e.g. Ramesh Kumar"
+                        />
+                      </div>
+                      <div className="dash-form-group" style={{ flex: 1 }}>
+                        <label>Rating</label>
+                        <select value={rev.rating} 
+                          onChange={e => {
+                            const r = [...form.reviews];
+                            r[idx] = { ...r[idx], rating: parseInt(e.target.value) || 5 };
+                            setForm(f => ({ ...f, reviews: r }));
+                          }}
+                        >
+                          {[5, 4, 3, 2, 1].map(n => <option key={n} value={n}>{n} ⭐</option>)}
+                        </select>
+                      </div>
+                      <div className="dash-form-group" style={{ flex: 1.5 }}>
+                        <label>Date</label>
+                        <input type="date" 
+                          value={rev.created_at ? new Date(rev.created_at).toISOString().split('T')[0] : (rev.date || new Date().toISOString().split('T')[0])} 
+                          onChange={e => {
+                            const r = [...form.reviews];
+                            r[idx] = { ...r[idx], date: e.target.value, created_at: e.target.value };
+                            setForm(f => ({ ...f, reviews: r }));
+                          }} 
+                        />
+                      </div>
+                      <button type="button" className="dash-icon-btn del" style={{ marginTop: 22 }}
+                        onClick={() => setForm(f => ({ ...f, reviews: f.reviews.filter((_, j) => j !== idx) }))}>
+                        <FiX />
+                      </button>
+                    </div>
+                    <div className="dash-form-group">
+                      <label>Comment</label>
+                      <textarea rows={2} value={rev.comment || ''} 
+                        onChange={e => {
+                          const r = [...form.reviews];
+                          r[idx] = { ...r[idx], comment: e.target.value };
+                          setForm(f => ({ ...f, reviews: r }));
+                        }} 
+                        placeholder="Delicious! True authentic flavors..."
+                      />
+                    </div>
+                  </div>
+                ))}
+                {(form.reviews || []).length === 0 && (
+                  <p style={{ color: 'var(--text-light)', fontSize: 13, fontStyle: 'italic', textAlign: 'center', padding: '10px 0' }}>
+                    No reviews added. Click "Add Review" to add mock/manual reviews.
+                  </p>
+                )}
+              </div>
             </div>
             <div className="dash-modal-footer">
               <button className="dash-btn-secondary" onClick={() => setShowForm(false)}>Cancel</button>
@@ -231,3 +352,4 @@ export default function AdminProducts() {
     </motion.div>
   );
 }
+

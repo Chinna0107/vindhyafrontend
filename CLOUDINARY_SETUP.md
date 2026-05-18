@@ -1,4 +1,4 @@
-# Cloudinary Setup Guide for OM Pickles Admin Panel
+# Cloudinary Setup Guide for Vindhya Pickles Admin Panel
 
 ## ✅ Your Cloudinary Account Details
 

@@ -45,23 +45,25 @@
 }
 
 .footer-logo-img {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
+  width: 170px;
+  height: 115px;
+  border-radius: 24px;
   object-fit: cover;
-  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.3);
+  box-shadow: 0 6px 24px rgba(212, 160, 23, 0.35);
   flex-shrink: 0;
+  transition: transform 0.3s ease;
 }
 
+.footer-logo-img:hover {
+  transform: scale(1.05);
+}
 .footer-logo-name {
   font-family: 'Playfair Display', serif;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 1px;
+  color: #ffff; /* Exact deep maroon tone inspired from "Vindhya" logo text */
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 10px rgba(53, 56, 53, 0.4);
 }
 
 .footer-logo-tagline {
@@ -233,8 +235,8 @@
   }
   
   .footer-logo-img {
-    width: 48px;
-    height: 48px;
+    width: 70px;
+    height: 60px;
     border-radius: 10px;
   }
   

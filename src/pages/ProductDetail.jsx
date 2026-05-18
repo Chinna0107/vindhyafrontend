@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -48,10 +48,93 @@ export default function ProductDetail() {
   const [activeTab, setActiveTab] = useState(0);
   const [showAllReviews, setShowAllReviews] = useState(false);
 
+  const [reviewsList, setReviewsList] = useState([]);
+  const [loadingReviews, setLoadingReviews] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
+
+  // Customer reviews form state
+  const [customer, setCustomer] = useState(null);
+  const [newReview, setNewReview] = useState({ customer_name: '', rating: 5, comment: '' });
+  const [submittingReview, setSubmittingReview] = useState(false);
+  const [reviewSuccess, setReviewSuccess] = useState(false);
+
+  const relatedRef = useRef(null);
+
+  const scroll = (ref, direction) => {
+    if (ref.current) {
+      const { scrollLeft, clientWidth } = ref.current;
+      const scrollTo = direction === 'left' 
+        ? scrollLeft - clientWidth * 0.75 
+        : scrollLeft + clientWidth * 0.75;
+      ref.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const data = localStorage.getItem('customerData');
+    if (data) {
+      setCustomer(JSON.parse(data));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (customer?.name) {
+      setNewReview(f => ({ ...f, customer_name: customer.name }));
+    }
+  }, [customer]);
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    if (!newReview.customer_name || !newReview.comment) return;
+    setSubmittingReview(true);
+    try {
+      const res = await fetch(`${API}/products/${product.id}/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReview),
+      });
+      if (res.ok) {
+        setReviewSuccess(true);
+        setNewReview(f => ({ ...f, comment: '' }));
+        // Refresh reviews
+        const reviewsRes = await fetch(`${API}/products/${product.id}/reviews`);
+        const reviewsData = await reviewsRes.json();
+        setReviewsList(reviewsData);
+        setTimeout(() => setReviewSuccess(false), 4000);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+
+  useEffect(() => {
+    fetch(`${API}/products`)
+      .then(res => res.json())
+      .then(setAllProducts)
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    if (!product?.id) return;
+    setLoadingReviews(true);
+    fetch(`${API}/products/${product.id}/reviews`)
+      .then(res => res.json())
+      .then(data => {
+        setReviewsList(data);
+        setLoadingReviews(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoadingReviews(false);
+      });
+  }, [product]);
+
   useSEO({
     title: product ? `${product.name} — Buy Authentic Andhra Pickle Online` : 'Product',
     description: product
-      ? `Buy ${product.name} online — ${product.short_desc}. Handcrafted authentic Andhra pickle by OM Pickles & Foods. No preservatives, delivered across India.`
+      ? `Buy ${product.name} online — ${product.short_desc}. Handcrafted authentic Andhra pickle by Vindhya Pickles & Foods. No preservatives, delivered across India.`
       : '',
     canonical: `/products/${slug}`,
     image: product?.images?.[0],
@@ -69,7 +152,7 @@ export default function ProductDetail() {
       name: product.name,
       description: product.full_desc || product.short_desc,
       image: product.images,
-      brand: { '@type': 'Brand', name: 'OM Pickles & Foods' },
+      brand: { '@type': 'Brand', name: 'Vindhya Pickles & Foods' },
       offers: product.prices?.map(p => ({
         '@type': 'Offer',
         price: p.price,
@@ -94,7 +177,7 @@ export default function ProductDetail() {
   useEffect(() => { window.scrollTo(0, 0); setActiveTab(0); }, [slug]);
 
   useEffect(() => {
-    if (product?.prices?.[0]?.weight) setSelectedWeight(product.prices[0].weight);
+    if (product?.prices?.[0]?.weight) setSelectedWeight(product.prices?.[0]?.weight);
   }, [product]);
 
   if (loading || !product) return <div style={{ display: 'flex', justifyContent: 'center', padding: 80 }}><div className="dash-spinner" /></div>;
@@ -107,7 +190,9 @@ export default function ProductDetail() {
 
   const currentPrice = prices.find(p => p.weight === selectedWeight) || prices[0];
   const discount = currentPrice.originalPrice ? Math.round(((currentPrice.originalPrice - currentPrice.price) / currentPrice.originalPrice) * 100) : 0;
-  const relatedProducts = [];
+  const relatedProducts = allProducts
+    .filter(p => p.category === product.category && p.id !== product.id)
+    .slice(0, 8);
   const nutrition = NUTRITION[product.category] || NUTRITION.veg;
   const reviews = testimonials.slice(0, 3);
   const activeTabLabel = tabs[activeTab];
@@ -380,44 +465,200 @@ export default function ProductDetail() {
         </div>
       </section>
 
-      {/* RELATED PRODUCTS */}
+      {/* CUSTOMER REVIEWS & RATINGS */}
+      <section className="pd-reviews-section">
+        <div className="container">
+          <div className="pd-reviews-header">
+            <div>
+              <h2>Customer Reviews & Ratings</h2>
+              <p>Hear from our authentic food-loving family</p>
+            </div>
+            <div className="pd-overall-rating">
+              <span className="rating-num">★ {parseFloat(product.rating || 0).toFixed(1)}</span>
+              <span className="reviews-count">Based on {reviewsList.length} verified reviews</span>
+            </div>
+          </div>
+
+          <div className="pd-reviews-container">
+            {/* Left Column: Existing Reviews */}
+            <div className="pd-reviews-list-col">
+              {loadingReviews ? (
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 0' }}>
+                  <div className="dash-spinner" />
+                </div>
+              ) : reviewsList.length === 0 ? (
+                <div className="pd-no-reviews">
+                  <FiMessageCircle className="no-rev-icon" size={32} />
+                  <p>No customer reviews yet. Ratings are verified for all purchases.</p>
+                </div>
+              ) : (
+                <div className="pd-reviews-stack">
+                  {reviewsList.map((rev, idx) => {
+                    const charCodeSum = rev.customer_name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                    const hue = charCodeSum % 360;
+                    const avatarBg = `hsl(${hue}, 60%, 42%)`;
+                    
+                    return (
+                      <motion.div 
+                        key={rev.id} 
+                        className="pd-review-card"
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                        whileHover={{ y: -3 }}
+                      >
+                        <div className="pd-review-user">
+                           <div className="pd-review-avatar" style={{ backgroundColor: avatarBg }}>
+                            {rev.customer_name.trim().charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <h4 className="pd-review-name">{rev.customer_name}</h4>
+                            <div className="pd-review-stars">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} className={`star-pip ${i < rev.rating ? 'active' : ''}`}>
+                                  ★
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        <p className="pd-review-comment">{rev.comment}</p>
+                        <span className="pd-review-date">
+                          Verified Buyer • {new Date(rev.created_at).toLocaleDateString(undefined, { dateStyle: 'medium' })}
+                        </span>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Right Column: Write a Review Form */}
+            <div className="pd-write-review-col">
+              <div className="pd-write-review-card">
+                <h3>Share Your Experience</h3>
+                <p>We value your honest feedback on our authentic flavors.</p>
+                
+                {reviewSuccess ? (
+                  <motion.div 
+                    className="review-success-msg"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                  >
+                    <h4>✓ Thank You!</h4>
+                    <p>Your review has been successfully submitted and verified.</p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmitReview} className="pd-review-form">
+                    <div className="pd-form-group">
+                      <label>Your Name</label>
+                      <input 
+                        type="text"
+                        required
+                        placeholder="Enter your name"
+                        value={newReview.customer_name}
+                        onChange={e => setNewReview(f => ({ ...f, customer_name: e.target.value }))}
+                        disabled={!!customer}
+                        className={customer ? 'disabled' : ''}
+                      />
+                      {customer && <span className="pd-form-help">Logged in as {customer.name}</span>}
+                    </div>
+
+                    <div className="pd-form-group">
+                      <label>Rating</label>
+                      <div className="pd-rating-select">
+                        {[5, 4, 3, 2, 1].map(stars => (
+                          <button
+                            key={stars}
+                            type="button"
+                            className={`pd-star-btn ${newReview.rating === stars ? 'active' : ''}`}
+                            onClick={() => setNewReview(f => ({ ...f, rating: stars }))}
+                          >
+                            ★ {stars} Stars
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="pd-form-group">
+                      <label>Your Comment</label>
+                      <textarea
+                        required
+                        rows={4}
+                        placeholder="Delicious! Tell us about the taste, spice levels, and texture..."
+                        value={newReview.comment}
+                        onChange={e => setNewReview(f => ({ ...f, comment: e.target.value }))}
+                      />
+                    </div>
+
+                    <button 
+                      type="submit" 
+                      className="pd-submit-review-btn" 
+                      disabled={submittingReview}
+                    >
+                      {submittingReview ? 'Submitting...' : 'Submit Review'}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* PEOPLE ALSO BUY (RELATED PRODUCTS) */}
       {relatedProducts.length > 0 && (
         <section className="pd-related">
           <div className="container">
             <div className="pd-related-header">
               <div>
-                <h2>You May Also Like</h2>
-                <p>Handpicked recommendations based on your taste</p>
+                <h2>People Also Buy</h2>
+                <p>Authentic pairings handpicked for you</p>
               </div>
               <Link to="/products" className="pd-view-all">View All <FiArrowLeft style={{ transform: 'rotate(180deg)' }} /></Link>
             </div>
-            <div className="pd-related-grid">
-              {relatedProducts.map((rp, i) => (
-                <motion.div key={rp.id} className="pd-related-card"
-                  initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07 }} whileHover={{ y: -6 }}
-                  onClick={() => navigate(`/products/${rp.slug}`)}>
-                  <div className="related-img-wrap">
-                    <img src={rp.images[0]} alt={rp.name} />
-                    <span className="related-tag-badge">{rp.tag}</span>
-                  </div>
-                  <div className="related-info">
-                    <div className="related-top-row">
-                      <span>{rp.emoji}</span>
+            
+            <div className="product-slider-wrapper">
+              <button className="slider-arrow prev" onClick={() => scroll(relatedRef, 'left')} aria-label="Previous Products">
+                <FiChevronLeft />
+              </button>
+              
+              <div className="pd-related-grid product-slider" ref={relatedRef}>
+                {relatedProducts.map((rp, i) => (
+                  <motion.div key={rp.id} className="pd-related-card"
+                    initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }} whileHover={{ y: -6 }}
+                    onClick={() => navigate(`/products/${rp.slug}`)}>
+                    <div className="related-img-wrap">
+                      <img src={rp.images?.[0] || 'https://placehold.co/300x300?text=No+Image'} alt={rp.name} />
+                      <span className="related-tag-badge">{rp.tag}</span>
                     </div>
-                    <h4>{rp.name}</h4>
-                    <p>{rp.shortDesc}</p>
-                    <div className="related-price-row">
-                      <span className="r-price">₹{rp.prices[0].price}</span>
-                      <span className="r-orig">₹{rp.prices[0].originalPrice}</span>
-                      <motion.button className="r-add-btn" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}
-                        onClick={e => e.stopPropagation()}>
-                        <FiPlus />
-                      </motion.button>
+                    <div className="related-info">
+                      <div className="related-top-row">
+                        <span>{rp.emoji}</span>
+                      </div>
+                      <h4>{rp.name}</h4>
+                      <p>{rp.short_desc}</p>
+                      <div className="related-price-row">
+                        <span className="r-price">₹{rp.prices?.[0]?.price}</span>
+                        <span className="r-orig">₹{rp.prices?.[0]?.originalPrice}</span>
+                        <motion.button className="r-add-btn" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}
+                          onClick={e => {
+                            e.stopPropagation();
+                            addToCart(rp, rp.prices?.[0]?.weight, 1);
+                          }}>
+                          <FiPlus />
+                        </motion.button>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </div>
+
+              <button className="slider-arrow next" onClick={() => scroll(relatedRef, 'right')} aria-label="Next Products">
+                <FiChevronRight />
+              </button>
             </div>
           </div>
         </section>
@@ -438,16 +679,16 @@ export default function ProductDetail() {
                     <div className="c-value">+91 8142128079</div>
                   </div>
                 </a>
-                <a href="mailto:ompicklesandfoodss@gmail.com" className="pd-contact-method">
+                <a href="mailto:vindhyapicklesandfoods@gmail.com" className="pd-contact-method">
                   <FiMail />
                   <div>
                     <div className="c-label">Email Us</div>
-                    <div className="c-value">ompicklesandfoodss@gmail.com</div>
+                    <div className="c-value">vindhyapicklesandfoods@gmail.com</div>
                   </div>
                 </a>
               </div>
             </div>
-            <img src="https://res.cloudinary.com/dgyykbmt6/image/upload/v1778398642/WhatsApp_Image_2026-05-10_at_13.06.16_vgp1do.jpg" alt="Customer Service" />
+            <img src="https://res.cloudinary.com/dgyykbmt6/image/upload/v1779075778/banner3_gzt6jr.jpg" alt="Customer Service" />
           </div>
         </div>
       </section>

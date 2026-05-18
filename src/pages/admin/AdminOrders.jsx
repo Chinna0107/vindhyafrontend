@@ -241,7 +241,7 @@ export default function AdminOrders() {
         <body>
           <div class="shipping-label">
             <div class="header">
-              <div class="company-name">OM PICKLES & FOODS</div>
+              <div class="company-name">VINDHYA PICKLES & FOODS</div>
               <div class="tagline">Authentic Homemade Pickles</div>
             </div>
             
@@ -249,12 +249,12 @@ export default function AdminOrders() {
               <div class="from-address">
                 <div class="address-label">From:</div>
                 <div class="address-content">
-                  <strong>OM Pickles & Foods</strong><br>
+                  <strong>Vindhya Pickles & Foods</strong><br>
                   D.No: 12-34-56, Pickle Street<br>
                   Spice Colony, Hyderabad<br>
                   Telangana - 500001<br>
                   Phone: +91 8142128079<br>
-                  Email: ompicklesandfoodss@gmail.com
+                  Email: vindhyapicklesandfoods@gmail.com
                 </div>
               </div>
               
@@ -335,8 +335,8 @@ export default function AdminOrders() {
             </div>
             
             <div class="footer">
-              Thank you for choosing OM Pickles & Foods!<br>
-              For support: +91 8142128079 | ompicklesandfoodss@gmail.com
+              Thank you for choosing Vindhya Pickles & Foods!<br>
+              For support: +91 8142128079 | vindhyapicklesandfoods@gmail.com
             </div>
           </div>
         </body>
