@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const BASE_URL = 'https://ompicklesandfoods.in';
+const BASE_URL = 'https://vindhyafoodsandsnacks.in';
 const DEFAULT_IMAGE = `${BASE_URL}/logo.jpeg`;
 const SITE_NAME = 'Vindhya Pickles & Foods';
 

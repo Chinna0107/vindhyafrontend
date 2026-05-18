@@ -9,7 +9,7 @@ const sections = [
     title: 'Information We Collect',
     content: (
       <>
-        <p>When you use ompicklesandfoods.in, we collect the following types of information:</p>
+        <p>When you use vindhyafoodsandsnacks.in, we collect the following types of information:</p>
         <div className="policy-table-wrap">
           <table className="policy-table">
             <thead><tr><th>Type</th><th>Data Collected</th><th>Purpose</th></tr></thead>

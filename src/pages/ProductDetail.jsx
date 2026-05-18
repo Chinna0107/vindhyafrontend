@@ -158,7 +158,7 @@ export default function ProductDetail() {
         price: p.price,
         priceCurrency: 'INR',
         availability: 'https://schema.org/InStock',
-        url: `https://ompicklesandfoods.in/products/${slug}`,
+        url: `https://vindhyafoodsandsnacks.in/products/${slug}`,
         name: p.weight,
       })),
       aggregateRating: {

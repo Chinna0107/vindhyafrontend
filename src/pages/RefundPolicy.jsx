@@ -68,7 +68,7 @@ const sections = [
     title: 'Razorpay Payment Refunds',
     content: (
       <>
-        <p>All payments on ompicklesandfoods.in are processed securely through <strong>Razorpay</strong>. Refunds are credited back to the original payment source:</p>
+        <p>All payments on vindhyafoodsandsnacks.in are processed securely through <strong>Razorpay</strong>. Refunds are credited back to the original payment source:</p>
         <div className="razorpay-badge">💳 Powered by <span>Razorpay</span> — Secure Payment Gateway</div>
         <div className="policy-table-wrap">
           <table className="policy-table">
