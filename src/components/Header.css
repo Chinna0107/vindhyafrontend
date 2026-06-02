@@ -91,6 +91,11 @@
   gap: 20px;
 }
 
+/* Move logo more to the left */
+.header-inner .logo {
+  margin-right: auto;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -141,7 +146,6 @@
   display: flex;
   align-items: center;
   gap: 24px;
-  flex: 1;
   justify-content: center;
 }
 

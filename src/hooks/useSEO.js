@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-const BASE_URL = 'https://vindhyafoodsandsnacks.in';
-const DEFAULT_IMAGE = `${BASE_URL}/logo.jpeg`;
-const SITE_NAME = 'Vindhya Pickles & Foods';
+const BASE_URL = 'https://vindhyafoods.in';
+const DEFAULT_IMAGE = `${BASE_URL}/logo3.png`;
+const SITE_NAME = 'Vindhya Foods';
 
-export default function useSEO({ title, description, canonical, image, type = 'website' }) {
+export default function useSEO({ title, description, canonical, image, type = 'website', keywords }) {
   useEffect(() => {
     const fullTitle = title
       ? `${title} | ${SITE_NAME}`
@@ -41,6 +41,11 @@ export default function useSEO({ title, description, canonical, image, type = 'w
     setMeta('meta[name="twitter:description"]', 'content', desc);
     setMeta('meta[name="twitter:image"]', 'content', ogImage);
 
+    // Keywords meta tag
+    if (keywords) {
+      setMeta('meta[name="keywords"]', 'content', keywords);
+    }
+
     // Canonical link
     let canonicalEl = document.querySelector('link[rel="canonical"]');
     if (!canonicalEl) {
@@ -49,5 +54,5 @@ export default function useSEO({ title, description, canonical, image, type = 'w
       document.head.appendChild(canonicalEl);
     }
     canonicalEl.setAttribute('href', canonicalUrl);
-  }, [title, description, canonical, image, type]);
+  }, [title, description, canonical, image, type, keywords]);
 }

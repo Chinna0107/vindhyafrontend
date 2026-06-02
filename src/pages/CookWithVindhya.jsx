@@ -45,7 +45,7 @@ const recipes = [
     time: '15 min',
     servings: '4 servings',
     difficulty: 'Easy',
-    image: 'https://snakzee.com/_next/image?url=%2Fproducts%2FPickles%2Fmango.jpg&w=3840&q=75',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWX8yC_HB8Ss8YIKWNJgkc8G3pmLp-ed-Pnw&s',
     ingredientsQuery: 'Hi, I would like to order Pulihora Paste for the Instant Pulihora recipe.',
     steps: [
       'Cook 2 cups of rice and spread it on a wide plate to cool.',

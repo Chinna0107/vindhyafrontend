@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -500,6 +500,26 @@ export default function Checkout() {
     name: '', phone: '', email: '', line1: '', line2: '', city: '', state: '', pincode: ''
   });
   const [paymentId, setPaymentId] = useState(null);
+
+  // Auto-populate user details from localStorage when logged in
+  useEffect(() => {
+    const storedCustomer = localStorage.getItem('customerData');
+    if (storedCustomer) {
+      try {
+        const customer = JSON.parse(storedCustomer);
+        if (customer) {
+          setAddress(prev => ({
+            ...prev,
+            name: customer.name || '',
+            phone: customer.phone || '',
+            email: customer.email || ''
+          }));
+        }
+      } catch (e) {
+        console.error('Failed to parse customer data', e);
+      }
+    }
+  }, []);
 
   const getPrice = (item) =>
     item.prices.find(p => p.weight === item.selectedWeight)?.price || item.prices[0].price;

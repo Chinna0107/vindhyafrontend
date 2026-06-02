@@ -166,9 +166,10 @@ function ProductCard({ product, delay = 0 }) {
 
 export default function Home() {
   useSEO({
-    title: 'Authentic Andhra Pickles — Buy Online India',
-    description: 'Buy authentic Andhra pickles online — Mango Avakaya, Gongura Pachadi, Chicken Pickle, Mutton Pickle, Karam Podi & more. Handcrafted by Beemanaboina Sridevi. Free delivery across India.',
+    title: 'Vindhya Foods - Best Pickles & Snacks in Guntur | Authentic Andhra Pickles Online',
+    description: 'Vindhya Foods - Best pickles in Guntur & authentic Andhra snacks. Order Mango Avakaya, Gongura Pachadi, Chicken Pickle, Mutton Pickle, Karam Podi & more online. Handcrafted by Beemanaboina Sridevi. Free delivery across India.',
     canonical: '/',
+    keywords: 'vindhya foods, vindhya pickles, best pickles in guntur, best snacks in guntur, guntur pickles, andhra pickles, buy pickles online, mango avakaya, gongura pachadi, chicken pickle, mutton pickle, karam podi, andhra foods, homemade pickles india, authentic pickles, spicy pickles, telugu pickles, avakaya online, non veg pickles, guntur snacks, andhra snacks online, traditional pickles guntur'
   });
   const { products, loading } = useProducts();
   const [currentBanner, setCurrentBanner] = useState(0);
