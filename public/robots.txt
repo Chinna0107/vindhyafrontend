@@ -1,25 +1,8 @@
 User-agent: *
 Allow: /
-Allow: /products
-Allow: /products/
-Allow: /about
-Allow: /contact
-Allow: /cart
-Allow: /checkout
-Allow: /login
 
-# Block admin and customer private pages
-Disallow: /admin
 Disallow: /admin/
-Disallow: /admin/dashboard
 Disallow: /customer/dashboard
-
-# Block API endpoints if crawled
 Disallow: /api/
-Disallow: /*.json$
 
-# Sitemap location
 Sitemap: https://vindhyafoods.in/sitemap.xml
-
-# Crawl delay (optional, be polite to servers)
-Crawl-delay: 1
