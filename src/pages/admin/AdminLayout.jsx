@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation, Link, Outlet } from 'react-router-dom';
-import { FiGrid, FiPackage, FiShoppingBag, FiBarChart2, FiUsers, FiLogOut } from 'react-icons/fi';
+import { FiGrid, FiPackage, FiShoppingBag, FiBarChart2, FiUsers, FiLogOut, FiTag } from 'react-icons/fi';
 import logo from '../../assets/logo3.png';
 import '../Dashboard.css';
 
@@ -9,6 +9,7 @@ const tabs = [
   { path: '/admin/products', icon: <FiShoppingBag />, label: 'Products' },
   { path: '/admin/orders', icon: <FiPackage />, label: 'Orders' },
   { path: '/admin/customers', icon: <FiUsers />, label: 'Customers' },
+  { path: '/admin/coupons', icon: <FiTag />, label: 'Coupons' },
   { path: '/admin/reports', icon: <FiBarChart2 />, label: 'Reports' },
 ];
 

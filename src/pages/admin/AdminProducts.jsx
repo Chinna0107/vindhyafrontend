@@ -142,6 +142,15 @@ export default function AdminProducts() {
     load();
   };
 
+  const toggleCoupon = async (p) => {
+    await fetch(`${API}/products/${p.id}`, {
+      method: 'PUT',
+      headers: authHeader(),
+      body: JSON.stringify({ ...p, coupon_applicable: !p.coupon_applicable }),
+    });
+    load();
+  };
+
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
       <div className="dash-actions-bar">
@@ -150,7 +159,7 @@ export default function AdminProducts() {
 
       <div className="dash-table-wrap">
         <table className="dash-table">
-          <thead><tr><th>Emoji</th><th>Name</th><th>Category</th><th>Tag</th><th>Prices</th><th>Stock</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Emoji</th><th>Name</th><th>Category</th><th>Tag</th><th>Prices</th><th>Stock</th><th>Coupon</th><th>Actions</th></tr></thead>
           <tbody>
             {products.map(p => (
               <tr key={p.id}>
@@ -164,6 +173,19 @@ export default function AdminProducts() {
                   )) : '—'}
                 </td>
                 <td><span className="dash-badge" style={{ background: p.in_stock ? '#10b98120' : '#ef444420', color: p.in_stock ? '#10b981' : '#ef4444' }}>{p.in_stock ? 'In Stock' : 'Out'}</span></td>
+                <td>
+                  <button
+                    onClick={() => toggleCoupon(p)}
+                    style={{
+                      background: p.coupon_applicable ? '#10b98120' : '#ef444420',
+                      color: p.coupon_applicable ? '#10b981' : '#ef4444',
+                      border: 'none', cursor: 'pointer', padding: '4px 10px',
+                      borderRadius: 6, fontSize: 12, fontWeight: 600,
+                    }}
+                  >
+                    {p.coupon_applicable ? 'Applicable' : 'Not Applicable'}
+                  </button>
+                </td>
                 <td className="dash-actions">
                   <button className="dash-icon-btn edit" onClick={() => openEdit(p)}><FiEdit2 /></button>
                   <button className="dash-icon-btn del" onClick={() => del(p.id)}><FiTrash2 /></button>

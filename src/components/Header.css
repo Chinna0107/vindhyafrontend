@@ -89,11 +89,12 @@
   justify-content: space-between;
   height: 80px;
   gap: 20px;
+  padding-left: 0;
 }
 
-/* Move logo more to the left */
 .header-inner .logo {
   margin-right: auto;
+  margin-left: -8px;
 }
 
 .logo {

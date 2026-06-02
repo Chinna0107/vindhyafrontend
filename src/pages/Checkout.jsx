@@ -2,15 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  FiArrowRight, FiArrowLeft, FiTag, FiTruck, FiCheck,
+  FiArrowRight, FiArrowLeft, FiTag, FiTruck, FiCheck, FiX,
   FiUser, FiPhone, FiMapPin, FiMail,
   FiCreditCard, FiEdit2, FiShield
 } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import API from '../config';
 import './Checkout.css';
-
-const COUPONS = { OM10: 0, PICKLE20: 0, FIRST15: 0, GET10: 10 };
 
 const STEPS = ['Cart & Promo', 'Review Order', 'Payment'];
 
@@ -45,7 +43,7 @@ function ItemRow({ item, getPrice }) {
 }
 
 /* ─── STEP 1 ─── */
-function Step1({ items, setItems, coupon, setCoupon, couponApplied, setCouponApplied, couponDiscount, setCouponDiscount, onNext }) {
+function Step1({ items, setItems, coupon, setCoupon, couponApplied, setCouponApplied, couponDiscount, setCouponDiscount, setCouponMinOrder, onNext }) {
   const [couponError, setCouponError] = useState('');
 
   const getPrice = (item) =>
@@ -61,18 +59,35 @@ function Step1({ items, setItems, coupon, setCoupon, couponApplied, setCouponApp
     setItems(prev => prev.filter(i => !(i.id === id && i.selectedWeight === weight)));
 
   const subtotal = items.reduce((s, i) => s + getPrice(i) * i.qty, 0);
-  const discount = couponApplied ? Math.round(subtotal * couponDiscount / 100) : 0;
+  const applicableSubtotal = items.filter(i => i.coupon_applicable !== false).reduce((s, i) => s + getPrice(i) * i.qty, 0);
+  const discount = couponApplied ? Math.round(applicableSubtotal * couponDiscount / 100) : 0;
   const delivery = 0;
   const total = subtotal - discount + delivery;
 
-  const applyCoupon = () => {
+  const applyCoupon = async () => {
     const code = coupon.trim().toUpperCase();
-    if (COUPONS[code]) {
-      setCouponApplied(true);
-      setCouponDiscount(COUPONS[code]);
-      setCouponError('');
-    } else {
-      setCouponError('Invalid coupon code');
+    if (!code) return;
+    // Only apply discount to coupon-applicable items
+    const applicableSubtotal = items
+      .filter(i => i.coupon_applicable !== false)
+      .reduce((s, i) => s + getPrice(i) * i.qty, 0);
+    try {
+      const res = await fetch(`${API}/coupons/validate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, subtotal: applicableSubtotal }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.valid) {
+        setCouponError(data.message || 'Invalid coupon code');
+      } else {
+        setCouponApplied(true);
+        setCouponDiscount(data.discount_percent);
+        setCouponMinOrder(data.min_order_value || 0);
+        setCouponError('');
+      }
+    } catch {
+      setCouponError('Failed to validate coupon');
     }
   };
 
@@ -125,16 +140,24 @@ function Step1({ items, setItems, coupon, setCoupon, couponApplied, setCouponApp
         <div className="ck-coupon-box">
           <FiTag size={15} />
           <input
-            type="text" placeholder="Promo code (try GET10)"
-            value={coupon} onChange={e => { setCoupon(e.target.value); setCouponError(''); }}
+            type="text" placeholder="Enter promo code"
+            value={coupon} onChange={e => { setCoupon(e.target.value.toUpperCase()); setCouponError(''); }}
             disabled={couponApplied}
+            onKeyDown={e => e.key === 'Enter' && !couponApplied && applyCoupon()}
           />
+          {couponApplied && (
+            <button className="ck-coupon-remove" onClick={() => { setCouponApplied(false); setCouponDiscount(0); setCoupon(''); setCouponMinOrder(0); }} title="Remove coupon">
+              <FiX size={13} />
+            </button>
+          )}
           <button className={`ck-coupon-btn ${couponApplied ? 'applied' : ''}`}
             onClick={applyCoupon} disabled={couponApplied}>
             {couponApplied ? <FiCheck size={14} /> : 'Apply'}
           </button>
         </div>
-        {couponApplied && <p className="ck-coupon-ok">🎉 {couponDiscount}% discount applied!</p>}
+        {couponApplied && (
+          <p className="ck-coupon-ok">🎉 {couponDiscount}% off applied{items.some(i => i.coupon_applicable === false) ? ' (on eligible items only)' : ''}!</p>
+        )}
         {couponError && <p className="ck-coupon-err">{couponError}</p>}
 
         <div className="ck-summary-rows">
@@ -146,9 +169,6 @@ function Step1({ items, setItems, coupon, setCoupon, couponApplied, setCouponApp
               <span>Promo ({coupon.toUpperCase()})</span><span>−₹{discount}</span>
             </div>
           )}
-          <div className="ck-summary-row">
-            <span>Delivery</span><span className="green">FREE</span>
-          </div>
           <div className="ck-summary-divider" />
           <div className="ck-summary-row total">
             <span>Total</span><span>₹{total}</span>
@@ -496,6 +516,7 @@ export default function Checkout() {
   const [coupon, setCoupon] = useState('');
   const [couponApplied, setCouponApplied] = useState(false);
   const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponMinOrder, setCouponMinOrder] = useState(0);
   const [address, setAddress] = useState({
     name: '', phone: '', email: '', line1: '', line2: '', city: '', state: '', pincode: ''
   });
@@ -554,6 +575,7 @@ export default function Checkout() {
                 coupon={coupon} setCoupon={setCoupon}
                 couponApplied={couponApplied} setCouponApplied={setCouponApplied}
                 couponDiscount={couponDiscount} setCouponDiscount={setCouponDiscount}
+                setCouponMinOrder={setCouponMinOrder}
                 onNext={() => setStep(1)}
               />
             )}

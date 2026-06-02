@@ -26,6 +26,7 @@ import AdminProducts from './pages/admin/AdminProducts';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminCustomers from './pages/admin/AdminCustomers';
 import AdminReports from './pages/admin/AdminReports';
+import AdminCoupons from './pages/admin/AdminCoupons';
 
 import CustomerLayout from './pages/customer/CustomerLayout';
 import CustomerOverview from './pages/customer/CustomerOverview';
@@ -75,6 +76,7 @@ export default function App() {
               <Route path="orders" element={<AdminOrders />} />
               <Route path="customers" element={<AdminCustomers />} />
               <Route path="reports" element={<AdminReports />} />
+              <Route path="coupons" element={<AdminCoupons />} />
             </Route>
 
             {/* Customer Panel */}

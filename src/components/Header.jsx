@@ -109,7 +109,7 @@ export default function Header() {
       </div>
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <div className="container header-inner">
-        <Link to="/" className="logo">
+          <Link to="/" className="logo">
             <img src={logo} alt="Vindhya Pickles Logo" className="logo-img" />
             <div className="logo-text">
               <span className="logo-main">VINDHYA PICKLES</span>
