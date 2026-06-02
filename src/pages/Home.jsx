@@ -187,8 +187,13 @@ export default function Home() {
     }
   };
 
-  const featured = products.filter(p => ['Bestseller', 'Popular'].includes(p.tag)).slice(0, 8);
-  const bestSelling = [...products].sort((a, b) => (b.reviews || 0) - (a.reviews || 0)).slice(0, 8);
+const featured = products
+  .filter(p => p.tag === "Popular")
+  .slice(0, 8);
+
+const bestSelling = products
+  .filter(p => p.tag === "BestSeller")
+  .slice(0, 8);
 
   useEffect(() => {
     const t = setInterval(() => setCurrentBanner(p => (p + 1) % banners.length), 5000);
