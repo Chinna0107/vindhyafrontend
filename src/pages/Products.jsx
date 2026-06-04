@@ -9,10 +9,38 @@ import './Products.css';
 
 const categories = [
   { id: 'all', label: 'All Products', emoji: '🫙' },
-  { id: 'pickles', label: 'Pickles', emoji: '🥭' },
-  { id: "podi's", label: "Podi's", emoji: '🌶️' },
+  { id: 'veg', label: 'Veg Pickles', emoji: '🥭' },
+  { id: 'nonveg', label: 'Non-Veg Pickles', emoji: '🍗' },
+  { id: 'karam', label: "Podi's", emoji: '🌶️' },
   { id: 'snacks', label: 'Snacks', emoji: '🍪' },
+  { id: 'vadiyalu', label: 'Vadiyalu', emoji: '🌀' },
 ];
+
+const subcategories = {
+  snacks: [
+    { id: 'all', label: 'All Snacks', emoji: '🍪' },
+    { id: 'sweet items', label: 'Sweet Items', emoji: '🍬' },
+    { id: 'hot items', label: 'Hot Items', emoji: '🌶️' },
+  ],
+  vadiyalu: [
+    { id: 'all', label: 'All Vadiyalu', emoji: '🌀' },
+    { id: 'rice', label: 'Rice Vadiyalu', emoji: '🍚' },
+    { id: 'urad', label: 'Urad Vadiyalu', emoji: '🫘' },
+    { id: 'mixed', label: 'Mixed', emoji: '🥣' },
+  ],
+};
+
+const subCatMap = {
+  snacks: {
+    'sweet items': p => p.subcategory === 'sweet items',
+    'hot items': p => p.subcategory === 'hot items',
+  },
+  vadiyalu: {
+    rice: p => p.subcategory === 'rice',
+    urad: p => p.subcategory === 'urad',
+    mixed: p => p.subcategory === 'mixed',
+  },
+};
 
 export default function Products() {
   useSEO({
@@ -52,13 +80,14 @@ export default function Products() {
     count: c.id === 'all' ? allProducts.length : allProducts.filter(p => p.category === c.id).length,
   }));
 
+  const subcats = subcategories[activeCategory] || [];
+
   const filtered = allProducts
     .filter(p => activeCategory === 'all' || p.category === activeCategory)
     .filter(p => {
-      if (activeCategory === 'snacks' && activeSubcategory !== 'all') {
-        return p.subcategory === activeSubcategory;
-      }
-      return true;
+      if (activeSubcategory === 'all' || !subCatMap[activeCategory]) return true;
+      const matcher = subCatMap[activeCategory][activeSubcategory];
+      return matcher ? matcher(p) : p.subcategory === activeSubcategory;
     })
     .filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || (p.short_desc || '').toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
@@ -113,14 +142,10 @@ export default function Products() {
           </div>
         </section>
 
-        {/* SUBCATEGORIES FOR SNACKS */}
-        {activeCategory === 'snacks' && (
+        {/* SUBCATEGORIES */}
+        {subcats.length > 0 && (
           <div className="subcategories-bar" style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '20px 0' }}>
-            {[
-              { id: 'all', label: 'All Snacks' },
-              { id: 'sweet items', label: 'Sweet Items' },
-              { id: 'hot items', label: 'Hot Items' },
-            ].map(sub => (
+            {subcats.map(sub => (
               <button
                 key={sub.id}
                 onClick={() => setActiveSubcategory(sub.id)}
@@ -190,7 +215,7 @@ export default function Products() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}>
-                    <Link to={`/products/${product.slug}`} className="product-card-link">
+                    <Link to={`/products/${encodeURIComponent(product.slug || '')}`} className="product-card-link">
                       <div className="pcf-img">
                         <div className="pcf-emoji">{product.emoji}</div>
                         <div className="pcf-tag">{product.tag}</div>
@@ -203,7 +228,7 @@ export default function Products() {
                         <span className="pcf-weight">{firstPrice.weight}</span>
                         <span className="pcf-spice">{'🌶️'.repeat(product.spice)}</span>
                       </div>
-                      <Link to={`/products/${product.slug}`} className="product-name-link">
+                      <Link to={`/products/${encodeURIComponent(product.slug || '')}`} className="product-name-link">
                         <h3>{product.name}</h3>
                       </Link>
                       <p>{product.short_desc}</p>

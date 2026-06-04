@@ -563,47 +563,31 @@
 }
 
 @media (max-width: 600px) {
-  .ck-body { padding: 24px 16px 60px; }
-  .ck-hero { padding: 48px 0 36px; }
-  .ck-stepbar { gap: 0; justify-content: flex-start; }
-  .ck-step-line { width: 32px; }
+  .ck-body { padding: 20px 12px 60px; }
+  .ck-hero { padding: 44px 0 32px; }
+  .ck-hero-content h1 { font-size: 1.6rem; }
+  .ck-stepbar { gap: 0; justify-content: flex-start; overflow-x: auto; padding-bottom: 4px; }
+  .ck-step-line { width: 28px; }
   .ck-step-label { font-size: 11px; }
   .ck-form-grid { grid-template-columns: 1fr; }
   .ck-btn-row { flex-direction: column; }
   .ck-back-btn { justify-content: center; }
   .ck-step-circle { width: 30px; height: 30px; font-size: 12px; }
-  
-  .ck-success {
-    padding: 40px 16px;
-  }
-  
-  .ck-success-icon {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .ck-checkmark-svg {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .ck-success h2 {
-    font-size: 1.8rem;
-  }
-  
-  .ck-success-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-  
+  .ck-cart-img { width: 68px; height: 68px; border-radius: 10px; }
+  .ck-cart-name { font-size: 13px; }
+  .ck-price { font-size: 15px; }
+
+  .ck-success { padding: 36px 12px; }
+  .ck-success-icon { width: 96px; height: 96px; }
+  .ck-checkmark-svg { width: 46px; height: 46px; }
+  .ck-success h2 { font-size: 1.7rem; }
+  .ck-success p { font-size: 1rem; }
+  .ck-success-actions { flex-direction: column; align-items: center; }
   .ck-success-actions .btn-primary,
-  .ck-success-actions .ck-back-btn {
-    width: 100%;
-    max-width: 280px;
-  }
+  .ck-success-actions .ck-back-btn { width: 100%; max-width: 280px; }
 }
 
 @media (max-width: 400px) {
   .ck-step-label { display: none; }
-  .ck-step-line { width: 24px; }
+  .ck-step-line { width: 20px; }
 }

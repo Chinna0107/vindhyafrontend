@@ -227,49 +227,24 @@
 }
 
 @media (max-width: 600px) {
-  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; padding: 40px 14px 28px; }
   .footer-bottom-inner { flex-direction: column; gap: 8px; text-align: center; }
-  
-  .footer-logo {
-    gap: 10px;
-  }
-  
-  .footer-logo-img {
-    width: 70px;
-    height: 60px;
-    border-radius: 10px;
-  }
-  
-  .footer-logo-name {
-    font-size: 20px;
-  }
-  
-  .footer-logo-tagline {
-    font-size: 10px;
-  }
+  .footer-bottom-links { flex-wrap: wrap; justify-content: center; }
+
+  .footer-logo { gap: 10px; }
+  .footer-logo-img { width: 60px; height: 52px; border-radius: 10px; }
+  .footer-logo-name { font-size: 18px; }
+  .footer-logo-tagline { font-size: 10px; }
+
+  /* stack contact items */
+  .contact-list li { align-items: flex-start; }
 }
 
 @media (max-width: 400px) {
-  .footer-grid {
-    padding: 40px 16px 30px;
-    gap: 24px;
-  }
-  
-  .footer-logo-img {
-    width: 44px;
-    height: 44px;
-  }
-  
-  .footer-logo-name {
-    font-size: 18px;
-  }
-  
-  .footer-col h4 {
-    font-size: 16px;
-  }
-  
-  .footer-col ul li a,
-  .footer-col ul li span {
-    font-size: 13px;
-  }
+  .footer-grid { padding: 32px 12px 24px; gap: 20px; }
+  .footer-logo-img { width: 44px; height: 44px; }
+  .footer-logo-name { font-size: 16px; }
+  .footer-col h4 { font-size: 15px; }
+  .footer-col ul li a, .footer-col ul li span { font-size: 13px; }
+  .social-btn { width: 36px; height: 36px; font-size: 16px; }
 }

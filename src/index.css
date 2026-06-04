@@ -20,6 +20,9 @@
   --shadow-glass: 0 8px 32px 0 rgba(92, 9, 18, 0.04);
   --radius: 20px;
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Accent colors used across components (fallback for older components) */
+  --accent: #c8102e; /* deep brand red accent */
+  --accent-light: rgba(200,16,46,0.08);
 }
 
 * {
@@ -378,37 +381,29 @@ a:focus-visible {
   .container {
     padding: 0 16px;
   }
-  
-  h1 {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-  }
-  
-  h2 {
-    font-size: clamp(1.25rem, 3.5vw, 2rem);
-  }
-  
-  h3 {
-    font-size: clamp(1rem, 3vw, 1.5rem);
-  }
-  
-  button {
-    min-height: 44px;
-  }
 
-  /* Smoother scrolling on iOS */
-  * {
-    -webkit-overflow-scrolling: touch;
-  }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+  h2 { font-size: clamp(1.25rem, 3.5vw, 2rem); }
+  h3 { font-size: clamp(1rem, 3vw, 1.5rem); }
+
+  button { min-height: 44px; }
+
+  * { -webkit-overflow-scrolling: touch; }
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 12px;
-  }
+  .container { padding: 0 12px; }
 
   .btn-primary {
     padding: 13px 24px;
     font-size: 14px;
+  }
+}
+
+/* Safe area support for notch/home-bar devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
 

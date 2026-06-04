@@ -65,7 +65,7 @@
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 16px;
 }
 
@@ -137,6 +137,70 @@
   border-radius: 0 0 20px 20px;
 }
 
+/* SUBCATEGORIES */
+.subcategories-section {
+  margin-bottom: 24px;
+}
+
+.subcategories-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.subcat-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 16px;
+  background: var(--white);
+  border: 2px solid transparent;
+  border-radius: 20px;
+  color: var(--dark);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  font-family: 'Playfair Display', serif;
+}
+
+.subcat-btn:hover {
+  border-color: var(--dark);
+  box-shadow: 0 12px 40px rgba(235,184,18,0.15);
+  transform: translateY(-6px);
+}
+
+.subcat-btn.active {
+  border-color: var(--dark);
+  box-shadow: 0 12px 40px rgba(235,184,18,0.15);
+  transform: translateY(-6px);
+}
+
+.subcat-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+  border-radius: 0 0 20px 20px;
+}
+
+.subcat-emoji {
+  font-size: 32px;
+  transition: var(--transition);
+}
+
+.subcat-btn:hover .subcat-emoji,
+.subcat-btn.active .subcat-emoji {
+  transform: scale(1.2) rotate(-5deg);
+}
+
 /* FILTERS */
 .filters-bar {
   display: flex;
@@ -193,9 +257,9 @@
 .sort-box select {
   border: none;
   outline: none;
-  background: none;
+  background: white;
   font-size: 14px;
-  color: var(--text);
+  color: #1a1400;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
 }
@@ -434,6 +498,9 @@
     grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
   }
+  .categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
   
   .pcf-img {
     height: 190px;
@@ -450,7 +517,7 @@
 
 @media (max-width: 900px) {
   .categories-grid { 
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(3, 1fr); 
     gap: 12px;
   }
   
@@ -500,293 +567,113 @@
 
 @media (max-width: 768px) {
   .products-layout {
-    padding: 40px 16px 60px;
+    padding: 32px 14px 60px;
   }
-  
+
+  .page-hero {
+    padding: 70px 0 40px;
+  }
+
   .page-hero-content h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
-  
+
   .page-hero-content p {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
-  
-  .categories-grid { 
-    grid-template-columns: repeat(2, 1fr);
+
+  /* horizontal scroll for categories */
+  .categories-section {
+    margin-bottom: 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .categories-grid {
+    display: flex;
     gap: 10px;
+    width: max-content;
+    padding-bottom: 4px;
   }
-  
-  .products-grid-full { 
+
+  .category-card {
+    padding: 14px 12px;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .cat-emoji { font-size: 32px; margin-bottom: 6px; }
+  .cat-label { font-size: 12px; }
+  .cat-count { font-size: 10px; }
+
+  .subcategories-bar {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  .subcat-btn {
+    flex-shrink: 0;
+    min-width: 90px;
+    padding: 14px 12px;
+  }
+
+  .subcat-emoji { font-size: 26px; }
+
+  .products-grid-full {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  
-  .filters-bar { 
-    flex-direction: column; 
+
+  .filters-bar {
+    flex-direction: column;
     align-items: stretch;
     gap: 10px;
   }
-  
-  .search-box,
-  .sort-box {
-    width: 100%;
-  }
-  
-  .results-count {
-    text-align: center;
-  }
-  
-  .category-card {
-    padding: 16px 12px;
-  }
-  
-  .cat-emoji {
-    font-size: 36px;
-    margin-bottom: 8px;
-  }
-  
-  .cat-label {
-    font-size: 13px;
-  }
-  
-  .cat-count {
-    font-size: 10px;
-  }
-  
-  .pcf-img {
-    height: 160px;
-  }
-  
-  .pcf-tag,
-  .pcf-discount {
-    font-size: 10px;
-    padding: 3px 8px;
-  }
-  
-  .pcf-body {
-    padding: 14px;
-  }
-  
-  .pcf-body h3 {
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-  
-  .pcf-body p {
-    font-size: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .pcf-meta {
-    margin-bottom: 4px;
-  }
-  
-  .pcf-weight {
-    font-size: 10px;
-  }
-  
-  .pcf-stars {
-    margin-bottom: 10px;
-  }
-  
-  .pcf-stars .star {
-    font-size: 12px;
-  }
-  
-  .pcf-stars span {
-    font-size: 10px;
-  }
-  
-  .pcf-price {
-    font-size: 16px;
-  }
-  
-  .pcf-original {
-    font-size: 12px;
-  }
-  
-  .pcf-btn {
-    padding: 8px 12px;
-    font-size: 12px;
-    gap: 4px;
-  }
+
+  .search-box, .sort-box { width: 100%; }
+  .results-count { text-align: center; }
+
+  .pcf-img { height: 155px; }
+  .pcf-tag, .pcf-discount { font-size: 10px; padding: 3px 8px; }
+  .pcf-body { padding: 12px; }
+  .pcf-body h3 { font-size: 14px; margin-bottom: 3px; }
+  .pcf-body p { font-size: 10px; margin-bottom: 8px; line-height: 1.4; }
+  .pcf-meta { margin-bottom: 3px; }
+  .pcf-weight { font-size: 9px; }
+  .pcf-stars { margin-bottom: 8px; }
+  .pcf-stars .star { font-size: 11px; }
+  .pcf-stars span { font-size: 9px; }
+  .pcf-price { font-size: 15px; }
+  .pcf-original { font-size: 11px; }
+  .pcf-btn { padding: 8px 10px; font-size: 11px; gap: 3px; }
 }
 
 @media (max-width: 480px) {
-  .products-layout {
-    padding: 30px 12px 50px;
-  }
-  
-  .page-hero {
-    padding: 60px 0 40px;
-  }
-  
-  .page-hero-content h1 {
-    font-size: 1.5rem;
-  }
-  
-  .page-hero-content p {
-    font-size: 0.9rem;
-  }
-  
-  .page-hero-tag {
-    font-size: 12px;
-    padding: 6px 12px;
-  }
-  
-  .categories-section {
-    margin-bottom: 24px;
-  }
-  
-  .categories-grid { 
+  .products-layout { padding: 24px 10px 50px; }
+  .page-hero { padding: 56px 0 36px; }
+  .page-hero-content h1 { font-size: 1.5rem; }
+  .page-hero-content p { font-size: 0.88rem; }
+  .page-hero-tag { font-size: 11px; padding: 6px 12px; }
+
+  .products-grid-full {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 10px;
   }
-  
-  .products-grid-full { 
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  
-  .filters-bar { 
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .search-box,
-  .sort-box {
-    font-size: 12px;
-    padding: 8px 12px;
-  }
-  
-  .search-box input,
-  .sort-box select {
-    font-size: 12px;
-  }
-  
-  .results-count span {
-    font-size: 12px;
-  }
-  
-  .category-card {
-    padding: 12px 10px;
-    border-radius: 14px;
-  }
-  
-  .cat-emoji {
-    font-size: 32px;
-    margin-bottom: 6px;
-  }
-  
-  .cat-label {
-    font-size: 12px;
-  }
-  
-  .cat-count {
-    font-size: 9px;
-  }
-  
-  .product-card-full {
-    border-radius: 16px;
-  }
-  
-  .pcf-img {
-    height: 150px;
-    border-radius: 14px 14px 0 0;
-  }
-  
-  .pcf-tag,
-  .pcf-discount {
-    font-size: 9px;
-    padding: 2px 6px;
-    top: 8px;
-  }
-  
-  .pcf-tag {
-    left: 8px;
-  }
-  
-  .pcf-discount {
-    right: 8px;
-  }
-  
-  .pcf-body {
-    padding: 12px;
-  }
-  
-  .pcf-body h3 {
-    font-size: 14px;
-    margin-bottom: 3px;
-  }
-  
-  .pcf-body p {
-    font-size: 9px;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-  
-  .pcf-meta {
-    margin-bottom: 3px;
-  }
-  
-  .pcf-weight {
-    font-size: 9px;
-  }
-  
-  .pcf-spice {
-    font-size: 10px;
-  }
-  
-  .pcf-stars {
-    margin-bottom: 8px;
-    gap: 2px;
-  }
-  
-  .pcf-stars .star {
-    font-size: 11px;
-  }
-  
-  .pcf-stars span {
-    font-size: 9px;
-    margin-left: 3px;
-  }
-  
-  .pcf-footer {
-    gap: 8px;
-  }
-  
-  .pcf-prices {
-    gap: 6px;
-  }
-  
-  .pcf-price {
-    font-size: 15px;
-  }
-  
-  .pcf-original {
-    font-size: 11px;
-  }
-  
-  .pcf-btn {
-    padding: 7px 10px;
-    font-size: 11px;
-    gap: 3px;
-    border-radius: 20px;
-  }
-  
-  .no-results {
-    padding: 60px 16px;
-  }
-  
-  .no-results span {
-    font-size: 50px;
-  }
-  
-  .no-results h3 {
-    font-size: 1.2rem;
-  }
-  
-  .no-results p {
-    font-size: 0.9rem;
-  }
+
+  .filters-bar { gap: 8px; }
+  .search-box, .sort-box { font-size: 12px; padding: 8px 12px; }
+  .search-box input, .sort-box select { font-size: 12px; }
+  .results-count span { font-size: 12px; }
+
+  .pcf-img { height: 140px; }
+  .pcf-footer { gap: 6px; }
+  .pcf-prices { gap: 4px; }
+
+  .no-results { padding: 50px 12px; }
+  .no-results span { font-size: 46px; }
+  .no-results h3 { font-size: 1.1rem; }
+  .no-results p { font-size: 0.85rem; }
 }

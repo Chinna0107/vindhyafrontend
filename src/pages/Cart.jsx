@@ -87,14 +87,14 @@ export default function Cart() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 30, height: 0, marginBottom: 0 }}
                       transition={{ duration: 0.3 }}>
-                      <Link to={`/products/${item.slug}`} className="cart-item-img">
+                      <Link to={`/products/${encodeURIComponent(item.slug || '')}`} className="cart-item-img">
                         <img src={item.images?.[0]} alt={item.name} />
                       </Link>
                       <div className="cart-item-info">
                         <div className="cart-item-top">
                           <div>
                             <span className="cart-item-tag">{item.tag}</span>
-                            <Link to={`/products/${item.slug}`}><h3>{item.name}</h3></Link>
+                            <Link to={`/products/${encodeURIComponent(item.slug || '')}`}><h3>{item.name}</h3></Link>
                             <p className="cart-item-weight">{item.selectedWeight} · {'🌶️'.repeat(item.spice)}</p>
                           </div>
                           <div className="cart-item-actions">

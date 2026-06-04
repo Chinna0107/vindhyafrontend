@@ -133,7 +133,7 @@ function ProductCard({ product, delay = 0 }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
       whileHover={{ y: -8 }}>
-      <Link to={`/products/${product.slug}`} className="product-card-img-link">
+      <Link to={`/products/${encodeURIComponent(product.slug || '')}`} className="product-card-img-link">
         <div className="product-card-img">
           <img src={product.images?.[0]} alt={product.name} className="product-real-img" />
           <div className="product-img-overlay" />
@@ -143,7 +143,7 @@ function ProductCard({ product, delay = 0 }) {
       </Link>
       <div className="product-card-body">
         <div className="product-weight">{firstPrice.weight}</div>
-        <Link to={`/products/${product.slug}`}><h3>{product.name}</h3></Link>
+        <Link to={`/products/${encodeURIComponent(product.slug || '')}`}><h3>{product.name}</h3></Link>
         <p>{product.short_desc}</p>
         <div className="spice-level">
           {'🌶️'.repeat(product.spice)}{'⬜'.repeat(5 - product.spice)}

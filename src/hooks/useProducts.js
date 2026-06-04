@@ -33,7 +33,14 @@ function useFetch(url, cacheKey) {
     setError(null);
 
     fetch(url, { signal: abortRef.current.signal })
-      .then(r => r.json())
+      .then(async (r) => {
+        // Treat non-2xx as errors so callers don't receive unexpected payloads
+        const text = await r.text();
+        let parsed = null;
+        try { parsed = text ? JSON.parse(text) : null; } catch (e) { parsed = text; }
+        if (!r.ok) throw new Error(parsed?.message || `Request failed with status ${r.status}`);
+        return parsed;
+      })
       .then(result => {
         setCache(cacheKey, result);
         setData(result);
@@ -41,7 +48,7 @@ function useFetch(url, cacheKey) {
       })
       .catch(err => {
         if (err.name !== 'AbortError') {
-          setError(err.message);
+          setError(err.message || String(err));
           setLoading(false);
         }
       });
@@ -62,9 +69,33 @@ export function useProducts(category = null) {
 
 // Hook: fetch single product by slug
 export function useProduct(slug) {
-  const cacheKey = `product:${slug}`;
-  const { data, loading, error } = useFetch(slug ? `${API}/products/${slug}` : null, cacheKey);
-  return { product: data, loading, error };
+  if (!slug) return { product: null, loading: false, error: null };
+  // Try variants in order: normalized lowercase, original as-provided, capitalized-first-letter
+  const normalized = encodeURIComponent(String(slug).toLowerCase());
+  const original = encodeURIComponent(String(slug));
+  const capitalized = encodeURIComponent(String(slug).charAt(0).toUpperCase() + String(slug).slice(1));
+  const cacheKeyBase = `product:${normalized}`;
+
+  const [attempt, setAttempt] = useState(0);
+  const urls = [
+    `${API}/products/${normalized}`,
+    `${API}/products/${original}`,
+    `${API}/products/${capitalized}`,
+  ];
+
+  const url = urls[attempt] || urls[0];
+  const { data, loading, error } = useFetch(url, cacheKeyBase + `:attempt${attempt}`);
+
+  // On 404, advance to next attempt until we've tried all variants
+  useEffect(() => {
+    if (error && /404|Not Found/i.test(String(error)) && attempt < urls.length - 1) {
+      setAttempt(a => a + 1);
+    }
+  }, [attempt, error]);
+
+  // Only expose the error once we've exhausted all attempts
+  const exposedError = attempt >= urls.length - 1 ? error : null;
+  return { product: data, loading, error: exposedError, attempt, attempts: urls.length };
 }
 
 // Invalidate cache (call after admin edits)

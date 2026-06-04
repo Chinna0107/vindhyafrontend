@@ -8,10 +8,10 @@ import API from '../../config';
 const authHeader = () => ({ Authorization: `Bearer ${localStorage.getItem('adminToken')}`, 'Content-Type': 'application/json' });
 
 const EMPTY_FORM = {
-  name: '', slug: '', category: 'pickles', subcategory: '', tag: '', emoji: '', short_desc: '', full_desc: '',
+  name: '', slug: '', category: 'veg', subcategory: '', tag: '', emoji: '', short_desc: '', full_desc: '',
   spice: 1, in_stock: true, rating: 4.5, reviews: [],
   prices: [{ weight: '', price: '', originalPrice: '' }],
-  images: [''], benefits: [''], ingredients: [''],
+  images: [''], benefits: '', ingredients: '',
 };
 
 export default function AdminProducts() {
@@ -36,8 +36,8 @@ export default function AdminProducts() {
     reviews: Array.isArray(p.reviews) ? p.reviews : [],
     prices: Array.isArray(p.prices) && p.prices.length ? p.prices : [{ weight: '', price: '', originalPrice: '' }],
     images: Array.isArray(p.images) && p.images.length ? p.images : [''],
-    benefits: Array.isArray(p.benefits) && p.benefits.length ? p.benefits : [''],
-    ingredients: Array.isArray(p.ingredients) && p.ingredients.length ? p.ingredients : [''],
+    benefits: Array.isArray(p.benefits) && p.benefits.length ? p.benefits.join(', ') : (p.benefits || ''),
+    ingredients: Array.isArray(p.ingredients) && p.ingredients.length ? p.ingredients.join(', ') : (p.ingredients || ''),
   });
 
   const openEdit = async (p) => {
@@ -88,22 +88,19 @@ export default function AdminProducts() {
     }
   };
 
-  const setArr = (key, i, val) => setForm(f => { const a = [...f[key]]; a[i] = val; return { ...f, [key]: a }; });
-  const addArr = (key) => setForm(f => ({ ...f, [key]: [...f[key], ''] }));
-  const removeArr = (key, i) => setForm(f => ({ ...f, [key]: f[key].filter((_, idx) => idx !== i) }));
 
   const save = async () => {
     setError(''); setSaving(true);
     const payload = {
       ...form,
       spice: parseInt(form.spice),
-      subcategory: form.category === 'snacks' ? form.subcategory : null,
+      subcategory: ['snacks','vadiyalu'].includes(form.category) ? form.subcategory : null,
       rating: parseFloat(form.rating) || 0,
       reviews: Array.isArray(form.reviews) ? form.reviews.length : 0,
       prices: form.prices.filter(p => p.weight).map(p => ({ weight: p.weight, price: parseFloat(p.price), originalPrice: parseFloat(p.originalPrice) })),
       images: form.images.filter(Boolean),
-      benefits: form.benefits.filter(Boolean),
-      ingredients: form.ingredients.filter(Boolean),
+      benefits: form.benefits,
+      ingredients: form.ingredients,
     };
     const url = editing ? `${API}/products/${editing.id}` : `${API}/products`;
     const method = editing ? 'PUT' : 'POST';
@@ -218,9 +215,11 @@ export default function AdminProducts() {
                 <div className="dash-form-group">
                   <label>Category</label>
                   <select value={form.category} onChange={e => set('category', e.target.value)}>
-                    <option value="pickles">Pickles</option>
-                    <option value="podi's">Podi's</option>
+                    <option value="veg">Veg Pickles</option>
+                    <option value="nonveg">Non-Veg Pickles</option>
+                    <option value="karam">Podi's</option>
                     <option value="snacks">Snacks</option>
+                    <option value="vadiyalu">Vadiyalu</option>
                   </select>
                 </div>
                 {form.category === 'snacks' && (
@@ -230,6 +229,17 @@ export default function AdminProducts() {
                       <option value="">Select Subcategory</option>
                       <option value="sweet items">Sweet Items</option>
                       <option value="hot items">Hot Items</option>
+                    </select>
+                  </div>
+                )}
+                {form.category === 'vadiyalu' && (
+                  <div className="dash-form-group">
+                    <label>Subcategory</label>
+                    <select value={form.subcategory} onChange={e => set('subcategory', e.target.value)}>
+                      <option value="">Select Subcategory</option>
+                      <option value="rice">Rice Vadiyalu</option>
+                      <option value="urad">Urad Vadiyalu</option>
+                      <option value="mixed">Mixed</option>
                     </select>
                   </div>
                 )}
@@ -275,22 +285,16 @@ export default function AdminProducts() {
               </button>
 
               <div className="dash-form-section">Benefits</div>
-              {form.benefits.map((b, i) => (
-                <div key={i} className="dash-form-row" style={{ gap: 8 }}>
-                  <div className="dash-form-group" style={{ flex: 1 }}><input value={b} onChange={e => setArr('benefits', i, e.target.value)} placeholder="Rich in antioxidants" /></div>
-                  <button className="dash-icon-btn del" style={{ marginTop: 4 }} onClick={() => removeArr('benefits', i)} disabled={form.benefits.length === 1}><FiX /></button>
-                </div>
-              ))}
-              <button className="dash-btn-ghost" onClick={() => addArr('benefits')}><FiPlus /> Add Benefit</button>
+              <div className="dash-form-group">
+                <label style={{ fontSize: 12, color: '#9ca3af' }}>Comma separated — e.g. Rich in antioxidants, Boosts immunity</label>
+                <textarea rows={2} value={form.benefits} onChange={e => set('benefits', e.target.value)} placeholder="Rich in antioxidants, Boosts immunity, Aids digestion" />
+              </div>
 
               <div className="dash-form-section">Ingredients</div>
-              {form.ingredients.map((ing, i) => (
-                <div key={i} className="dash-form-row" style={{ gap: 8 }}>
-                  <div className="dash-form-group" style={{ flex: 1 }}><input value={ing} onChange={e => setArr('ingredients', i, e.target.value)} placeholder="Raw Mango" /></div>
-                  <button className="dash-icon-btn del" style={{ marginTop: 4 }} onClick={() => removeArr('ingredients', i)} disabled={form.ingredients.length === 1}><FiX /></button>
-                </div>
-              ))}
-              <button className="dash-btn-ghost" onClick={() => addArr('ingredients')}><FiPlus /> Add Ingredient</button>
+              <div className="dash-form-group">
+                <label style={{ fontSize: 12, color: '#9ca3af' }}>Comma separated — e.g. Raw Mango, Salt, Chili</label>
+                <textarea rows={2} value={form.ingredients} onChange={e => set('ingredients', e.target.value)} placeholder="Raw Mango, Salt, Red Chili, Mustard seeds" />
+              </div>
 
               <div className="dash-form-section" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
                 <span>Customer Reviews</span>

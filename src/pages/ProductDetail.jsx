@@ -36,7 +36,7 @@ import useSEO from '../hooks/useSEO';
 export default function ProductDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const { product, loading } = useProduct(slug);
+  const { product, loading, error, attempt, attempts } = useProduct(slug);
   const { addToCart } = useCart();
 
   const [selectedWeight, setSelectedWeight] = useState('');
@@ -180,7 +180,21 @@ export default function ProductDetail() {
     if (product?.prices?.[0]?.weight) setSelectedWeight(product.prices?.[0]?.weight);
   }, [product]);
 
-  if (loading || !product) return <div style={{ display: 'flex', justifyContent: 'center', padding: 80 }}><div className="dash-spinner" /></div>;
+  if (loading || (attempt < (attempts || 1) - 1 && !product)) return <div style={{ display: 'flex', justifyContent: 'center', padding: 80 }}><div className="dash-spinner" /></div>;
+
+  // Only show not-found after we've exhausted attempts
+  if (error || !product) {
+    console.error('ProductDetail load error:', error, 'slug:', slug);
+    return (
+      <div className="container" style={{ padding: 80, textAlign: 'center' }}>
+        <h2>Product not found</h2>
+        <p>We couldn't find the product for <strong>{slug}</strong>. It may have been removed or the URL is incorrect.</p>
+        <p>
+          <a href="/products" className="btn-primary">Back to Products</a>
+        </p>
+      </div>
+    );
+  }
 
   const images = product.images?.length ? product.images : ['https://placehold.co/600x600?text=No+Image'];
   const prices = product.prices?.length ? product.prices : [{ weight: '', price: 0, originalPrice: 0 }];
@@ -233,7 +247,7 @@ export default function ProductDetail() {
         <motion.div className="pd-gallery"
           initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.45 }}>
 
-          <div className="pd-main-img-wrap">
+          <div className="pd-main-img-wrap" onClick={() => setIsFullscreen(true)} style={{ cursor: 'zoom-in' }}>
             <AnimatePresence mode="wait">
               <motion.img key={selectedImage} src={images[selectedImage]} alt={product.name}
                 className="pd-main-img"
@@ -265,14 +279,16 @@ export default function ProductDetail() {
             </div>
           )}
 
-          <div className="pd-thumbs">
-            {images.map((img, idx) => (
-              <motion.button key={idx} className={`pd-thumb ${idx === selectedImage ? 'active' : ''}`}
-                onClick={() => setSelectedImage(idx)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <img src={img} alt={`${product.name} ${idx + 1}`} />
-              </motion.button>
-            ))}
-          </div>
+          {images.length > 1 && (
+            <div className="pd-thumbs">
+              {images.map((img, idx) => (
+                <motion.button key={idx} className={`pd-thumb ${idx === selectedImage ? 'active' : ''}`}
+                  onClick={() => setSelectedImage(idx)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <img src={img} alt={`${product.name} ${idx + 1}`} />
+                </motion.button>
+              ))}
+            </div>
+          )}
 
           <div className="pd-img-actions">
             <button onClick={() => navigator.share?.({ title: product.name, url: window.location.href })}>
@@ -288,7 +304,7 @@ export default function ProductDetail() {
           {/* Header */}
           <div className="pd-overview">
             <div className="pd-pills">
-              <span className="pill cat">{product.emoji} {product.category.toUpperCase()}</span>
+              <span className="pill cat">{product.emoji} {(product.category || '').toUpperCase()}</span>
               <span className="pill tag">{product.tag}</span>
             </div>
             <h1 className="pd-title">{product.name}</h1>
@@ -629,7 +645,7 @@ export default function ProductDetail() {
                   <motion.div key={rp.id} className="pd-related-card"
                     initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.07 }} whileHover={{ y: -6 }}
-                    onClick={() => navigate(`/products/${rp.slug}`)}>
+                                    onClick={() => navigate(`/products/${encodeURIComponent(rp.slug || '')}`)}>
                     <div className="related-img-wrap">
                       <img src={rp.images?.[0] || 'https://placehold.co/300x300?text=No+Image'} alt={rp.name} />
                       <span className="related-tag-badge">{rp.tag}</span>
