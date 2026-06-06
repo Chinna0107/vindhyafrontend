@@ -17,10 +17,10 @@ export default function Footer() {
           {/* BRAND */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src={logo}  style={{ width: '170px', height: '100px' }} alt="Vindhya Pickles Logo" className="footer-logo-img" />
+              <img src={logo}  style={{ width: '170px', height: '100px' }} alt="Vindhya Foods Logo" className="footer-logo-img" />
               <div className="footer-logo-name">VINDHYA FOODS</div>
             </div>
-            <p>Authentic Andhra pickles crafted with love, tradition, and the finest ingredients. Bringing the taste of home to your table since 2018.</p>
+            <p>Authentic Andhra pickles crafted with love, tradition, and the finest ingredients. Bringing the taste of home to your table since 2026.</p>
             <div className="footer-socials">
               <a href="https://www.instagram.com/vindhya.foods?igsh=MTR1b2VycjB0NW12dQ%3D%3D&utm_source=qr" className="social-btn"><FiInstagram /></a>
               <a href="https://www.facebook.com/share/16JvfPzWu1/?mibextid=wwXIfr" className="social-btn"><FiFacebook /></a>
@@ -75,11 +75,11 @@ export default function Footer() {
               </li>
               <li>
                 <FiMail />
-                <a href="mailto:vindhyapicklesandfoods@gmail.com">vindhyapicklesandfoods@gmail.com</a>
+                <a href="mailto:foods.vindhya@gmail.com">foods.vindhya@gmail.com</a>
               </li>
               <li>
                 <FiMapPin />
-                <span>Amaravathi, Guntur, Andhra Pradesh - 500000</span>
+                <span>Amaravathi, Guntur, Andhra Pradesh - 522020</span>
               </li>
             </ul>
           </div>
@@ -101,7 +101,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <div className="container footer-bottom-inner">
-            <p>© 2026 Vindhya Pickles &amp; Foods. All rights reserved. | Owner: <strong>Divya</strong></p>
+            <p>© 2026 Vindhya Foods. All rights reserved. | Owner: <strong>Divya</strong></p>
             <div className="footer-bottom-links">
               <Link to="/privacy-policy">Privacy</Link>
               <span>·</span>

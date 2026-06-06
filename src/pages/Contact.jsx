@@ -98,7 +98,7 @@ export default function Contact() {
               <div className="cc-icon mail-icon"><FiMail /></div>
               <div>
                 <div className="cc-label">Email</div>
-                <a href="mailto:vindhyapicklesandfoods@gmail.com" className="cc-value">vindhyapicklesandfoods@gmail.com</a>
+                <a href="mailto:foods.vindhya@gmail.com" className="cc-value">foods.vindhya@gmail.com</a>
                 <div className="cc-sub">We reply within 24 hours.</div>
               </div>
             </div>

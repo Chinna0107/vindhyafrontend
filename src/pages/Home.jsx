@@ -298,7 +298,7 @@ const bestSelling = products
                 />
               </div>
               <div className="story-badge-card">
-                <div className="badge-year">2018</div>
+                <div className="badge-year">2026</div>
                 <div className="badge-text">Est. in Amaravathi</div>
               </div>
             </div>

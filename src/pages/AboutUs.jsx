@@ -5,22 +5,22 @@ import './AboutUs.css';
 
 const values = [
   { title: 'Made at Home', desc: 'Every product is handcrafted in small batches using traditional kitchen methods — never in a factory.', icon: <FiHome /> },
-  { title: 'No Preservatives', desc: 'We use only fresh, natural ingredients sourced from local Telangana farms. Zero artificial additives.', icon: <FiShield /> },
-  { title: 'Made with Love', desc: 'Every recipe carries the warmth of three generations of Telangana women who believed food is love.', icon: <FiHeart /> },
+  { title: 'No Preservatives', desc: 'We use only fresh, natural ingredients sourced from local Andhra farms. Zero artificial additives.', icon: <FiShield /> },
+  { title: 'Made with Love', desc: 'Every recipe carries the warmth of three generations of Andhra women who believed food is love.', icon: <FiHeart /> },
   { title: 'Authentic Recipes', desc: 'Our recipes are passed down through generations — unchanged, uncompromised, and utterly authentic.', icon: <FiBookOpen /> }
 ];
 
 const processSteps = [
-  { step: '1', title: 'Sourcing', desc: 'Handpicked ingredients from local Telangana farms — fresh chilies, peanuts, millets and spices', icon: '🌱' },
+  { step: '1', title: 'Sourcing', desc: 'Handpicked ingredients from local Andhra farms — fresh chilies, peanuts, millets and spices', icon: '🌱' },
   { step: '2', title: 'Preparation', desc: 'Traditional stone-grinding for podis, sun-drying for vadiyalu, hand-rolling for snacks', icon: '👩‍🍳' },
   { step: '3', title: 'Cooking', desc: 'Slow-cooked in small batches with cold-pressed oils and age-old techniques. No shortcuts', icon: '🔥' },
   { step: '4', title: 'Packing & Delivery', desc: 'Sealed in food-grade containers while still fresh, and dispatched within 24 hours', icon: '📦' }
 ];
 
 const teamMembers = [
-  { name: 'Founder', role: 'Recipe Curator & Head Chef', desc: 'Grew up watching her grandmother prepare traditional Telangana snacks for every festival.', emoji: '👩‍🍳' },
+  { name: 'Founder', role: 'Recipe Curator & Head Chef', desc: 'Grew up watching her grandmother prepare traditional Andhra snacks for every festival.', emoji: '👩‍🍳' },
   { name: 'Quality Team', role: 'Freshness Guardians', desc: 'Ensures every batch meets our strict no-preservative, fresh-ingredient standards.', emoji: '🌿' },
-  { name: 'Delivery Team', role: 'Last-Mile Heroes', desc: 'Delivers your orders fresh across Telangana within 2-3 days of preparation.', emoji: '🚚' }
+  { name: 'Delivery Team', role: 'Last-Mile Heroes', desc: 'Delivers your orders fresh across Andhra within 2-3 days of preparation.', emoji: '🚚' }
 ];
 
 const rewards = [
@@ -33,16 +33,16 @@ const rewards = [
 const festivals = [
   { name: 'Sankranti', telugu: 'సంక్రాంతి • January', desc: 'The harvest festival — a time for Athrasalu, sweets and snacks.' },
   { name: 'Ugadi', telugu: 'ఉగాది • March/April', desc: 'Telugu New Year! A time for new beginnings and homemade sweets.' },
-  { name: 'Bonalu', telugu: 'బోనాలు • July/August', desc: 'Honoring Goddess Mahankali with special homemade snacks.' },
-  { name: 'Bathukamma', telugu: 'బతుకమ్మ • September/October', desc: 'Telangana\'s floral festival with folk songs and traditional foods.' },
+  // { name: 'Bonalu', telugu: 'బోనాలు • July/August', desc: 'Honoring Goddess Mahankali with special homemade snacks.' },
+  // { name: 'Bathukamma', telugu: 'బతుకమ్మ • September/October', desc: 'Andhra\'s floral festival with folk songs and traditional foods.' },
   { name: 'Dasara', telugu: 'దసరా • October', desc: 'Families exchange sweets and celebrate with grand feasts.' },
   { name: 'Diwali', telugu: 'దీపావళి • October/November', desc: 'Perfect time for Vindhya hampers and traditional sweets.' }
 ];
 
 export default function AboutUs() {
   useSEO({
-    title: 'About Us — Vindhya Pickles & Foods Story',
-    description: 'Learn about Vindhya Pickles & Foods. Authentic traditional recipes passed down through generations, made with love.',
+    title: 'About Us — Vindhya Foods Story',
+    description: 'Learn about Vindhya Foods. Authentic traditional recipes passed down through generations, made with love.',
     canonical: '/about',
   });
 
@@ -53,8 +53,8 @@ export default function AboutUs() {
         <div className="page-hero-bg" />
         <div className="container page-hero-content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <h1>About Vindhya Pickles</h1>
-            <p className="hero-subtitle">Vindhya was born from a simple longing — the taste of home. We bring authentic, homemade Telangana flavours to families across India.</p>
+            <h1>About Vindhya Foods</h1>
+            <p className="hero-subtitle">Vindhya was born from a simple longing — the taste of home. We bring authentic, homemade Andhra flavours to families across India.</p>
           </motion.div>
         </div>
         <div className="page-hero-wave">
@@ -210,7 +210,7 @@ export default function AboutUs() {
         <div className="container">
           <div className="section-title">
             <h2>Celebrate Every Festival 🎉</h2>
-            <p>From Sankranti to Diwali — every Telangana festival deserves authentic homemade flavors.</p>
+            <p>From Sankranti to Diwali — every Andhra festival deserves authentic homemade flavors.</p>
           </div>
           <div className="festivals-grid">
             {festivals.map((f, i) => (
