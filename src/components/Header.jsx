@@ -88,33 +88,40 @@ export default function Header() {
   }, [menuOpen, userDropdownOpen]);
 
   const productCategories = [
-    { name: 'All Products', path: '/products', emoji: '🫙' },
-    { name: 'Pickles', path: '/products?cat=pickles', emoji: '🥭' },
-    { name: 'Podi', path: '/products?cat=podi\'s', emoji: '🌶️' },
-    { name: 'Snacks', path: '/products?cat=snacks', emoji: '🥨' }
+    { name: "All Products",    path: "/products",             emoji: "🫙", image: "https://media.istockphoto.com/id/1155951289/photo/preserved-vegetables-in-glass-jars.jpg?s=612x612&w=0&k=20&c=xYOicDXD-EOCJSsLhtzJcUnaitfHGxXGSYTtcBQ7IU0=" },
+    { name: "Veg Pickles",     path: "/products?cat=veg",     emoji: "🥭", image: "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=64&h=64&fit=crop&auto=format" },
+    { name: "Non-Veg Pickles", path: "/products?cat=nonveg",  emoji: "🍗", image: "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=64&h=64&fit=crop&auto=format" },
+    { name: "Podi's",           path: "/products?cat=karam",   emoji: "🌶️", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdl5necT5OCNgYCMAfuzjwmtI5MfKUtF0zaA&s" },
+    { name: "Snacks",          path: "/products?cat=snacks",  emoji: "🍪", image: "https://www.grandecig.com/hs-fs/hubfs/images/blog_images/2019-Blog-Images/Savory_Snacks.jpg?width=734&name=Savory_Snacks.jpg" },
+    { name: "Vadiyalu",        path: "/products?cat=vadiyalu",emoji: "🌀", image: "https://5.imimg.com/data5/SELLER/Default/2024/3/400128882/NH/IR/CG/83139088/biyyam-pindi-vadiyalu-rice-papad.jpg" },
   ];
-
   return (
     <>
       <div className="promo-banner">
         <div className="promo-scroll">
           <div className="promo-content">
-            <FiTag size={14} />
+            {/* <FiTag size={14} />
             <span>Use code <strong>GET10</strong> for 10% OFF on all orders!</span>
             <FiTag size={14} />
             <span>Use code <strong>GET10</strong> for 10% OFF on all orders!</span>
             <FiTag size={14} />
             <span>Use code <strong>GET10</strong> for 10% OFF on all orders!</span>
             <FiTag size={14} />
-            <span>Use code <strong>GET10</strong> for 10% OFF on all orders!</span>
+            <span>Use code <strong>GET10</strong> for 10% OFF on all orders!</span> */}
+            <FiTag size={14} />
+            <span>Welcome to Vindhya Foods - Authentic Andhra Pickles & Snacks! 🌶️</span>
+            <FiTag size={14} />
+            <span>Welcome to Vindhya Foods - Authentic Andhra Pickles & Snacks! 🌶️</span>
+            <FiTag size={14} />
+            <span>Welcome to Vindhya Foods - Authentic Andhra Pickles & Snacks! 🌶️</span>
           </div>
         </div>
       </div>
       <div className="topbar">
         <div className="container topbar-inner">
-          <span><FiPhone size={12} /> +91 8142128079</span>
-          <span>🌶️ Free delivery on orders above ₹499</span>
-          <span>vindhyapicklesandfoods@gmail.com</span>
+          <span><FiPhone size={12} /> +91 99490 85469</span>
+          <span>🌶️ Free delivery on every order </span>
+          <span>foods.vindhya@gmail.com</span>
         </div>
       </div>
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
@@ -156,8 +163,8 @@ export default function Header() {
                   >
                     {productCategories.map((cat, i) => (
                       <Link key={i} to={cat.path} className="dropdown-item">
-                        <span className="dropdown-emoji">{cat.emoji}</span>
-                        {cat.name}
+                        <img src={cat.image} alt={cat.name} className="dropdown-img" />
+                        <span>{cat.name}</span>
                       </Link>
                     ))}
                   </motion.div>
