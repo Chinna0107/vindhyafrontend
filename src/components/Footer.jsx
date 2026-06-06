@@ -17,11 +17,8 @@ export default function Footer() {
           {/* BRAND */}
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src={logo} alt="Vindhya Pickles Logo" className="footer-logo-img" />
-              <div>
-                <div className="footer-logo-name">VINDHYA PICKLES</div>
-                <div className="footer-logo-tagline">& Foods</div>
-              </div>
+              <img src={logo}  style={{ width: '170px', height: '100px' }} alt="Vindhya Pickles Logo" className="footer-logo-img" />
+              <div className="footer-logo-name">VINDHYA FOODS</div>
             </div>
             <p>Authentic Andhra pickles crafted with love, tradition, and the finest ingredients. Bringing the taste of home to your table since 2018.</p>
             <div className="footer-socials">
@@ -88,6 +85,19 @@ export default function Footer() {
           </div>
 
         </div>
+
+        {/* <div className="footer-newsletter">
+          <div className="footer-newsletter-inner">
+            <div className="footer-newsletter-text">
+              <h5>🫙 Stay Pickled & Posted!</h5>
+              <p>Get new arrivals, seasonal specials & exclusive offers straight to your inbox.</p>
+            </div>
+            <div className="footer-newsletter-form">
+              <input type="email" placeholder="Enter your email address" />
+              <button>Subscribe</button>
+            </div>
+          </div>
+        </div> */}
 
         <div className="footer-bottom">
           <div className="container footer-bottom-inner">

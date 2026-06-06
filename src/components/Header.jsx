@@ -122,8 +122,8 @@ export default function Header() {
           <Link to="/" className="logo">
             <img src={logo} alt="Vindhya Pickles Logo" className="logo-img" />
             <div className="logo-text">
-              <span className="logo-main">VINDHYA PICKLES</span>
-              <span className="logo-sub">& Foods</span>
+              <span className="logo-main">VINDHYA FOODS</span>
+              {/* <span className="logo-sub">& Foods</span> */}
             </div>
           </Link>
 
