@@ -95,13 +95,19 @@ export default function AboutUs() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
-            “Every recipe we make carries the warmth of three generations of Telangana women who believed food is love.”
+            “Every recipe we make carries the warmth of three generations of Andhra women who believed food is love.”
           </motion.div>
           <div className="story-content">
-            <p><strong>Vindhya was born from a simple longing — the taste of home.</strong> Growing up in the heart of Telangana, our founder watched her grandmother prepare sweets under the warm sun, grind podis on a stone mortar, and fry murukulu to golden perfection for every festival.</p>
-            <p>When she moved to the city, that taste was impossible to find. Store-bought pickles lacked soul. Packaged snacks had preservatives. The authentic flavours of Telangana were fading.</p>
-            <p>So she went back to her roots — literally. Dusting off her grandmother's handwritten recipe book, she started making small batches at home. Word spread through WhatsApp. Friends told friends. And before long, Vindhya became Telangana's most loved homemade brand.</p>
-            <p>Today, every item is still made fresh after you order. No factories. No preservatives. Just honest, traditional Telangana food — delivered with love.</p>
+            <p><strong>Welcome to Vindhya Foods, where tradition meets purity.</strong>We are passionate about bringing authentic homemade flavors from Andhra Pradesh directly to your kitchen. Every product we offer is prepared using carefully selected ingredients sourced directly from trusted farmers, ensuring freshness, quality, and natural taste.</p>
+            {/* <p>So she went back to her roots — literally. Dusting off her grandmother's handwritten recipe book, she started making small batches at home. Word spread through WhatsApp. Friends told friends. And before long, Vindhya became Telangana's most loved homemade brand.</p> */}
+            <p>From traditional podis (karams) and pickles to healthy snacks and homemade specialties, our products are crafted in small batches using time-tested recipes passed down through generations. We believe that food should be free from unnecessary preservatives and full of genuine flavor.
+</p>
+<p>Our mission is simple: to deliver the taste of home to families across India and around the world. Today, we proudly serve customers who trust us for quality, authenticity, and the comforting flavors of traditional homemade food.
+</p>
+<p><strong>At Vindhya Foods, every pack carries our promise of purity, quality, and the love of homemade cooking.
+</strong></p>
+            {/* <p>Today, every item is still made fresh after you order. No factories. No preservatives. Just honest, traditional Telangana food — delivered with love.</p> */}
+            <p>From Our Farmers to Your Family – Authentic Taste, Delivered with Care.</p>
           </div>
         </div>
       </section>
