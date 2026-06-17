@@ -281,58 +281,7 @@ const bestSelling = products
       </motion.section>
 
       {/* OUR STORY */}
-      <section className="story-section">
-        <div className="container story-grid">
-          <motion.div className="story-visual"
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}>
-            <div className="story-img-wrap">
-              <div className="story-img-bg" />
-              <div className="story-img-main">
-                <img
-                  src="https://images.unsplash.com/photo-1606914501449-5a96b6ce24ca?w=600&h=600&fit=crop"
-                  alt="Traditional pickle making"
-                  className="story-real-img"
-                />
-              </div>
-              <div className="story-badge-card">
-                <div className="badge-year">2026</div>
-                <div className="badge-text">Est. in Amaravathi</div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div className="story-content"
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.8 }}>
-            <div className="section-title" style={{ textAlign: 'left', marginBottom: 32 }}>
-              <span className="tag">Our Story</span>
-              <h2>A Taste Born from<br />Grandmother's Kitchen</h2>
-              <p>What started as a family tradition in a small kitchen in Amaravathi has grown into a beloved brand trusted by thousands of families across India.</p>
-            </div>
-            <div className="story-points">
-              {storyPoints.map((pt, i) => (
-                <motion.div key={i} className="story-point"
-                  initial={{ opacity: 0, x: 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.15 }}>
-                  <div className="point-icon">{pt.icon}</div>
-                  <div><h4>{pt.title}</h4><p>{pt.desc}</p></div>
-                </motion.div>
-              ))}
-            </div>
-            <Link to="/about" className="btn-primary" style={{ marginTop: 8 }}>
-              <span>Read Full Story</span>
-              <FiArrowRight />
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+      
 
       {/* FEATURED PRODUCTS */}
       <section className="products-section">
@@ -406,6 +355,58 @@ const bestSelling = products
               <FiChevronRight />
             </button>
           </div>
+        </div>
+      </section>
+      <section className="story-section">
+        <div className="container story-grid">
+          <motion.div className="story-visual"
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}>
+            <div className="story-img-wrap">
+              <div className="story-img-bg" />
+              <div className="story-img-main">
+                <img
+                  src="https://images.unsplash.com/photo-1606914501449-5a96b6ce24ca?w=600&h=600&fit=crop"
+                  alt="Traditional pickle making"
+                  className="story-real-img"
+                />
+              </div>
+              <div className="story-badge-card">
+                <div className="badge-year">2026</div>
+                <div className="badge-text">Est. in Amaravathi</div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div className="story-content"
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8 }}>
+            <div className="section-title" style={{ textAlign: 'left', marginBottom: 32 }}>
+              <span className="tag">Our Story</span>
+              <h2>A Taste Born from<br />Grandmother's Kitchen</h2>
+              <p>What started as a family tradition in a small kitchen in Amaravathi has grown into a beloved brand trusted by thousands of families across India.</p>
+            </div>
+            <div className="story-points">
+              {storyPoints.map((pt, i) => (
+                <motion.div key={i} className="story-point"
+                  initial={{ opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.15 }}>
+                  <div className="point-icon">{pt.icon}</div>
+                  <div><h4>{pt.title}</h4><p>{pt.desc}</p></div>
+                </motion.div>
+              ))}
+            </div>
+            <Link to="/about" className="btn-primary" style={{ marginTop: 8 }}>
+              <span>Read Full Story</span>
+              <FiArrowRight />
+            </Link>
+          </motion.div>
         </div>
       </section>
 

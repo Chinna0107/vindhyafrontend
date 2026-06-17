@@ -47,6 +47,8 @@ export default function Footer() {
               <li><Link to="/products?cat=veg">Veg Pickles</Link></li>
               <li><Link to="/products?cat=nonveg">Non-Veg Pickles</Link></li>
               <li><Link to="/products?cat=karam">Karam Podi</Link></li>
+              <li><Link to="/products?cat=snacks">Snacks</Link></li>
+              <li><Link to="/products?cat=vadiyalu">Pickles</Link></li>
             </ul>
           </div>
 
